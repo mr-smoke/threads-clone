@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Profile from "./pages/Profile";
+import Post from "./pages/Post";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
           </header>
           <Routes>
             <Route path="/:id" element={<Profile />} />
+            <Route path="/post/:id" element={<Post />} />
           </Routes>
         </div>
       </div>
