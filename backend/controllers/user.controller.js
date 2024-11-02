@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import tokenization from "../utils/tokenization.js";
+import mongoose from "mongoose";
 
 export const signup = async (req, res) => {
   try {
@@ -57,6 +58,39 @@ export const login = async (req, res) => {
     tokenization(user._id, res);
 
     return res.status(200).send("User logged in successfully");
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
+export const logout = async (req, res) => {
+  try {
+    res.clearCookie("token");
+    return res.status(200).send("User logged out successfully");
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
+export const getUser = async (req, res) => {
+  const { query } = req.params;
+  try {
+    let user;
+
+    if (mongoose.Types.ObjectId.isValid(query)) {
+      user = await User.findById(query).exec();
+    } else {
+      user = await User.findOne({ username: query })
+        .select("-password")
+        .select("-updatedAt")
+        .exec();
+    }
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    return res.status(200).json(user);
   } catch (error) {
     return res.status(500).send(error.message);
   }
