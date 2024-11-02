@@ -95,3 +95,32 @@ export const getUser = async (req, res) => {
     return res.status(500).send(error.message);
   }
 };
+
+export const updateUser = async (req, res) => {
+  const { name, username, email } = req.body;
+  const { userId } = req.params;
+
+  try {
+    const user = await User.findById(userId).exec();
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    const isExistingUser = await User.findOne({
+      $or: [{ email }, { username }],
+    }).exec();
+    if (isExistingUser) {
+      return res.status(400).send("User already registered");
+    }
+
+    user.name = name || user.name;
+    user.username = username || user.username;
+    user.email = email || user.email;
+
+    await user.save();
+    return res.status(200).send("User updated successfully");
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
