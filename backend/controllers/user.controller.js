@@ -1,5 +1,6 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
+import tokenization from "../utils/tokenization.js";
 
 export const signup = async (req, res) => {
   try {
@@ -28,6 +29,7 @@ export const signup = async (req, res) => {
     });
 
     await newUser.save();
+    tokenization(newUser._id, res);
     return res.status(201).send("User created successfully");
   } catch (error) {
     return res.status(500).send(error.message);
@@ -51,6 +53,8 @@ export const login = async (req, res) => {
     if (!isMatch) {
       return res.status(400).send("Invalid credentials");
     }
+
+    tokenization(user._id, res);
 
     return res.status(200).send("User logged in successfully");
   } catch (error) {
