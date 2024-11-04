@@ -75,3 +75,34 @@ export const deletePost = async (req, res) => {
     return res.status(500).send(error.message);
   }
 };
+
+export const likePost = async (req, res) => {
+  const { id } = req.params;
+  const { img, username } = req.user;
+  const userId = req.user._id;
+
+  try {
+    const post = await Post.findOne({ _id: id }).exec();
+
+    if (!post) {
+      return res.status(404).send("Post not found");
+    }
+
+    const isLiked = post.likes.find(
+      (like) => like.userId.toString() === userId.toString()
+    );
+    if (isLiked) {
+      post.likes = post.likes.filter(
+        (like) => like.userId.toString() !== userId.toString()
+      );
+      await post.save();
+      return res.status(200).send("Unliked");
+    } else {
+      post.likes.push({ userId, img, username });
+      await post.save();
+      return res.status(200).send("Liked");
+    }
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};

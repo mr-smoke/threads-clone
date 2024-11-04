@@ -14,10 +14,6 @@ const postSchema = new mongoose.Schema(
     img: {
       type: [String],
     },
-    likes: {
-      type: Number,
-      default: 0,
-    },
     comments: [
       {
         userId: {
@@ -30,7 +26,22 @@ const postSchema = new mongoose.Schema(
           required: true,
           maxLength: 250,
         },
-        userPic: {
+        img: {
+          type: String,
+        },
+        username: {
+          type: String,
+        },
+      },
+    ],
+    likes: [
+      {
+        userId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+          required: true,
+        },
+        img: {
           type: String,
         },
         username: {
