@@ -78,8 +78,7 @@ export const deletePost = async (req, res) => {
 
 export const likePost = async (req, res) => {
   const { id } = req.params;
-  const { img, username } = req.user;
-  const userId = req.user._id;
+  const { img, username, id: userId } = req.user;
 
   try {
     const post = await Post.findOne({ _id: id }).exec();
@@ -102,6 +101,31 @@ export const likePost = async (req, res) => {
       await post.save();
       return res.status(200).send("Liked");
     }
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
+export const commentPost = async (req, res) => {
+  const { id } = req.params;
+  const { img, username, id: userId } = req.user;
+
+  try {
+    const { comment } = req.body;
+
+    if (!comment) {
+      return res.status(400).send("Comment is required");
+    }
+
+    const post = await Post.findOne({ _id: id }).exec();
+
+    if (!post) {
+      return res.status(404).send("Post not found");
+    }
+
+    post.comments.push({ userId, comment, img, username });
+    await post.save();
+    return res.status(200).send("Comment added");
   } catch (error) {
     return res.status(500).send(error.message);
   }
