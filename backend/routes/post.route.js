@@ -3,8 +3,9 @@ import {
   commentPost,
   createPost,
   deletePost,
+  getFeed,
+  getPersonalFeed,
   getPost,
-  getPosts,
   likePost,
   userPosts,
 } from "../controllers/post.controller.js";
@@ -12,10 +13,11 @@ import protectRoute from "../middlewares/protectRoute.js";
 
 const router = express.Router();
 
-router.get("/feed", getPosts);
-router.post("/create", protectRoute, createPost);
+router.get("/feed", getFeed);
+router.get("/personalFeed", protectRoute, getPersonalFeed);
 router.get("/:id", getPost);
 router.get("/user/:id", userPosts);
+router.post("/create", protectRoute, createPost);
 router.delete("/delete/:id", protectRoute, deletePost);
 router.post("/like/:id", protectRoute, likePost);
 router.post("/comment/:id", protectRoute, commentPost);

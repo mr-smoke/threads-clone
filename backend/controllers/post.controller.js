@@ -1,6 +1,7 @@
 import Post from "../models/post.model.js";
+import User from "../models/user.model.js";
 
-export const getPosts = async (req, res) => {
+export const getFeed = async (req, res) => {
   try {
     const posts = await Post.find().sort({ createdAt: -1 }).exec();
     return res.status(200).json(posts);
@@ -126,6 +127,21 @@ export const commentPost = async (req, res) => {
     post.comments.push({ userId, comment, img, username });
     await post.save();
     return res.status(200).send("Comment added");
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
+export const getPersonalFeed = async (req, res) => {
+  const userId = req.user._id;
+  try {
+    const user = await User.findById(userId).exec();
+
+    const following = user.following;
+    const posts = await Post.find({ userId: { $in: following } })
+      .sort({ createdAt: -1 })
+      .exec();
+    return res.status(200).json(posts);
   } catch (error) {
     return res.status(500).send(error.message);
   }
