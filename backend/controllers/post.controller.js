@@ -53,3 +53,25 @@ export const userPosts = async (req, res) => {
     return res.status(500).send(error.message);
   }
 };
+
+export const deletePost = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user._id;
+
+  try {
+    const post = await Post.findOne({ _id: id }).exec();
+
+    if (!post) {
+      return res.status(404).send("Post not found");
+    }
+
+    if (post.userId.toString() !== userId.toString()) {
+      return res.status(401).send("You are not authorized to delete this post");
+    }
+
+    await Post.findByIdAndDelete(id);
+    return res.status(200).send("Post deleted");
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};

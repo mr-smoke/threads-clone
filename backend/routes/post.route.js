@@ -1,6 +1,7 @@
 import express from "express";
 import {
   createPost,
+  deletePost,
   getPost,
   getPosts,
   userPosts,
@@ -13,5 +14,6 @@ router.get("/feed", getPosts);
 router.post("/create", protectRoute, createPost);
 router.get("/:id", getPost);
 router.get("/user/:id", userPosts);
+router.post("/delete/:id", protectRoute, deletePost);
 
 export default router;
