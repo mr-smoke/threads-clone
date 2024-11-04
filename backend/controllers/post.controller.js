@@ -10,9 +10,16 @@ export const getPosts = async (req, res) => {
 };
 
 export const createPost = async (req, res) => {
+  const userId = req.user._id;
+
   try {
-    const { caption, userId } = req.body;
-    const newPost = new Post({ caption, userId });
+    const { caption, img } = req.body;
+
+    if (!caption && !img) {
+      return res.status(400).send("Caption or image is required");
+    }
+
+    const newPost = new Post({ caption, img, userId });
     await newPost.save();
     return res.status(201).json(newPost);
   } catch (error) {
@@ -24,6 +31,11 @@ export const getPost = async (req, res) => {
   const { id } = req.params;
   try {
     const post = await Post.findOne({ _id: id }).exec();
+
+    if (!post) {
+      return res.status(404).send("Post not found");
+    }
+
     return res.status(200).json(post);
   } catch (error) {
     return res.status(500).send(error.message);

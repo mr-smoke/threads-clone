@@ -74,11 +74,15 @@ export const logout = async (req, res) => {
 
 export const getUser = async (req, res) => {
   const { query } = req.params;
+
   try {
     let user;
 
     if (mongoose.Types.ObjectId.isValid(query)) {
-      user = await User.findById(query).exec();
+      user = await User.findById(query)
+        .select("-password")
+        .select("-updatedAt")
+        .exec();
     } else {
       user = await User.findOne({ username: query })
         .select("-password")
@@ -98,10 +102,14 @@ export const getUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { name, username, email } = req.body;
-  const { userId } = req.params;
+  const userId = req.user._id;
 
   try {
     const user = await User.findById(userId).exec();
+
+    if (req.params.userId !== userId.toString()) {
+      return res.status(403).send("Unauthorized");
+    }
 
     if (!user) {
       return res.status(404).send("User not found");
@@ -130,7 +138,7 @@ export const followUser = async (req, res) => {
   const userId = req.user._id;
 
   try {
-    if (userId === followId) {
+    if (userId.toString() === followId) {
       return res.status(400).send("You cannot follow yourself");
     }
 
