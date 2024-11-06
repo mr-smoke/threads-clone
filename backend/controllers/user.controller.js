@@ -8,16 +8,16 @@ export const signup = async (req, res) => {
     const { email, username, password, name, confirmPassword } = req.body;
 
     if (!email || !username || !password || !name || !confirmPassword) {
-      return res.status(400).send("All input is required");
+      return res.status(400).json({ error: "Please fill in all fields" });
     }
 
     const user = await User.findOne({ $or: [{ email }, { username }] }).exec();
     if (user) {
-      return res.status(400).send("User already registered");
+      return res.status(400).json({ error: "User already registered" });
     }
 
     if (password !== confirmPassword) {
-      return res.status(400).send("Password does not match");
+      return res.status(400).json({ error: "Passwords do not match" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -31,7 +31,8 @@ export const signup = async (req, res) => {
 
     await newUser.save();
     tokenization(newUser._id, res);
-    return res.status(201).send("User created successfully");
+
+    return res.status(201).json(newUser);
   } catch (error) {
     return res.status(500).send(error.message);
   }

@@ -15,7 +15,7 @@ const Login = () => {
       <main className="flex flex-col items-center bg-gray-900 rounded-xl p-6 mx-auto w-max">
         <h1 className="text-3xl font-bold">Login</h1>
         <form
-          className="flex flex-col gap-3 w-72 sm:w-96"
+          className="flex flex-col gap-3 pt-3 w-72 sm:w-96"
           onSubmit={submitHandler}
         >
           <div className="flex flex-col gap-1">

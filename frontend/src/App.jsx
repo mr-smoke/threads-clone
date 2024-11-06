@@ -3,6 +3,7 @@ import Profile from "./pages/Profile";
 import Post from "./pages/Post";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import { Toaster } from "./components/ui/toaster";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             <Route path="/:id" element={<Profile />} />
             <Route path="/post/:id" element={<Post />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
           </Routes>
         </div>
       </div>
