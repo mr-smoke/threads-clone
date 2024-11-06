@@ -42,22 +42,22 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).send("All input is required");
+      return res.status(400).json({ error: "Please fill in all fields" });
     }
 
     const user = await User.findOne({ email }).exec();
     if (!user) {
-      return res.status(400).send("User not registered");
+      return res.status(400).json({ error: "User does not exist" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).send("Invalid credentials");
+      return res.status(400).json({ error: "Invalid credentials" });
     }
 
     tokenization(user._id, res);
 
-    return res.status(200).send("User logged in successfully");
+    return res.status(200).json(user);
   } catch (error) {
     return res.status(500).send(error.message);
   }
@@ -162,6 +162,18 @@ export const followUser = async (req, res) => {
 
       return res.status(200).send("User followed successfully");
     }
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
+export const getAuthUser = async (req, res) => {
+  const userId = req.user._id;
+
+  try {
+    const user = await User.findById(userId).exec();
+
+    return res.status(200).json(user);
   } catch (error) {
     return res.status(500).send(error.message);
   }

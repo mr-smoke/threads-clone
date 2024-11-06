@@ -1,6 +1,7 @@
 import express from "express";
 import {
   followUser,
+  getAuthUser,
   getUser,
   login,
   logout,
@@ -17,5 +18,6 @@ router.post("/logout", logout);
 router.get("/profile/:query", getUser);
 router.post("/update/:userId", protectRoute, updateUser);
 router.post("/follow/:followId", protectRoute, followUser);
+router.get("/getAuthUser", protectRoute, getAuthUser);
 
 export default router;

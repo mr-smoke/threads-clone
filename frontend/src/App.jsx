@@ -3,12 +3,13 @@ import Profile from "./pages/Profile";
 import Post from "./pages/Post";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import { Toaster } from "./components/ui/toaster";
 
 function App() {
   return (
     <>
       <div className="bg-black text-white min-h-screen flex justify-center">
-        <div className="w-[620px]">
+        <div className="w-[620px] flex flex-col">
           <header className="flex justify-center pt-6 pb-12">
             <img src="/light-logo.svg" alt="logo" className="w-6 h-6" />
           </header>
@@ -20,6 +21,7 @@ function App() {
           </Routes>
         </div>
       </div>
+      <Toaster />
     </>
   );
 }

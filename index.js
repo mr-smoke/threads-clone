@@ -9,7 +9,12 @@ import postRoutes from "./backend/routes/post.route.js";
 dotenv.config();
 connectDB();
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 const PORT = process.env.PORT || 3000;
 
