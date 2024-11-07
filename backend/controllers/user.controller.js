@@ -102,33 +102,39 @@ export const getUser = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-  const { name, username, email } = req.body;
+  const { name, username, email, bio } = req.body;
   const userId = req.user._id;
 
   try {
     const user = await User.findById(userId).exec();
 
     if (req.params.userId !== userId.toString()) {
-      return res.status(403).send("Unauthorized");
+      return res.status(403).json({ error: "Unauthorized" });
     }
 
     if (!user) {
-      return res.status(404).send("User not found");
+      return res.status(404).json({ error: "User not found" });
     }
 
-    const isExistingUser = await User.findOne({
-      $or: [{ email }, { username }],
-    }).exec();
+    if (user.email === email && user.username === username) {
+      var isExistingUser = false;
+    } else {
+      isExistingUser = await User.findOne({
+        $or: [{ email }, { username }],
+      }).exec();
+    }
+
     if (isExistingUser) {
-      return res.status(400).send("User already registered");
+      return res.status(400).json({ error: "User already exists" });
     }
 
     user.name = name || user.name;
     user.username = username || user.username;
     user.email = email || user.email;
+    user.bio = bio || user.bio;
 
     await user.save();
-    return res.status(200).send("User updated successfully");
+    return res.status(200).json(user);
   } catch (error) {
     return res.status(500).send(error.message);
   }
