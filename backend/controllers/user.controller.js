@@ -56,6 +56,11 @@ export const login = async (req, res) => {
       return res.status(400).json({ error: "Invalid credentials" });
     }
 
+    if (user.isFrozen) {
+      user.isFrozen = false;
+      await user.save();
+    }
+
     tokenization(user._id, res);
 
     return res.status(200).json(user);
@@ -179,6 +184,23 @@ export const getAuthUser = async (req, res) => {
 
   try {
     const user = await User.findById(userId).exec();
+
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
+
+export const freeze = async (req, res) => {
+  const userId = req.user._id;
+
+  try {
+    const user = await User.findById(userId).exec();
+
+    user.isFrozen = true;
+    await user.save();
+
+    res.clearCookie("token");
 
     return res.status(200).json(user);
   } catch (error) {

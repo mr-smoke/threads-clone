@@ -13,8 +13,6 @@ const UpdateUser = () => {
   });
   const imageRef = useRef(null);
 
-  console.log(user);
-
   const submitHandler = (e) => {
     e.preventDefault();
     updateUser(formData);
