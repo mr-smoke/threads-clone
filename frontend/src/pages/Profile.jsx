@@ -13,8 +13,10 @@ import {
 } from "react-icons/fa6";
 import { FaEllipsisH } from "react-icons/fa";
 import { IoEllipsisHorizontalCircle } from "react-icons/io5";
+import useGetProfile from "@/hooks/useGetProfile";
 
 const Profile = () => {
+  const { profile, isLoading } = useGetProfile();
   const post = {
     images: [
       "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -26,9 +28,9 @@ const Profile = () => {
       <section className="flex flex-col py-4 px-6">
         <div className="flex justify-between items-center">
           <div className="flex flex-col">
-            <h1 className="text-2xl font-bold">John Doe</h1>
+            <h1 className="text-2xl font-bold">{profile.name}</h1>
             <p className="">
-              Software Engineer
+              {profile.username}
               <span className="bg-gray-800 py-1.5 px-2 ml-1 rounded-lg text-xs text-gray-500 cursor-pointer">
                 threads.net
               </span>
@@ -38,17 +40,17 @@ const Profile = () => {
             <AvatarImage src="https://github.com/shadcn.png" />
           </Avatar>
         </div>
-        <p className="mt-4">
-          I'm a software engineer with a passion for building scalable web
-          applications. I'm currently working at threads.net as a frontend
-          developer.
-        </p>
+        <p className="mt-4">{profile.bio}</p>
         <div className="flex justify-between items-center mt-3">
           <div className="flex text-gray-500">
-            <p className="mr-2">100 followers</p>
+            <p className="mr-2">{profile.followers} Followers</p>
           </div>
           <div className="flex items-center">
-            <a href="https://instagram.com" target="_blank" rel="noreferrer">
+            <a
+              href={`https://instagram.com/${profile.username}`}
+              target="_blank"
+              rel="noreferrer"
+            >
               <FaInstagram size={24} className="mx-1.5" />
             </a>
             <Popover>
