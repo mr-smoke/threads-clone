@@ -11,8 +11,11 @@ import {
   FaRepeat,
 } from "react-icons/fa6";
 import { FaEllipsisH } from "react-icons/fa";
+import useGetFeed from "@/hooks/useGetFeed";
 
 const Home = () => {
+  const { feed, isLoading } = useGetFeed();
+
   const post = {
     images: [
       "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
