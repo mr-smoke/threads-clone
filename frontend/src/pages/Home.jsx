@@ -5,6 +5,14 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
   FaRegComment,
   FaRegHeart,
   FaRegPaperPlane,
@@ -12,9 +20,19 @@ import {
 } from "react-icons/fa6";
 import { FaEllipsisH } from "react-icons/fa";
 import useGetFeed from "@/hooks/useGetFeed";
+import { useRef, useState } from "react";
+import useCreatePost from "@/hooks/useCreatePost";
 
 const Home = () => {
+  const [caption, setCaption] = useState("");
   const { feed, isLoading } = useGetFeed();
+  const { createPost, isLoading: isCreatingPost } = useCreatePost();
+  const imageRef = useRef(null);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    createPost({ caption });
+  };
 
   const post = {
     images: [
@@ -24,6 +42,49 @@ const Home = () => {
   };
   return (
     <main className="flex flex-col justify-center bg-gray-900 rounded-xl">
+      <section className="absolute bottom-3 right-3">
+        <Dialog>
+          <DialogTrigger>
+            <button className="bg-gray-800 text-white px-4 py-2 rounded-lg">
+              Create Post
+            </button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>
+                <h1 className="text-2xl font-semibold">Create Post</h1>
+              </DialogTitle>
+              <DialogDescription>
+                <form>
+                  <div className="flex flex-col gap-3">
+                    <textarea
+                      className="border rounded-lg p-2 text-base text-black"
+                      placeholder="Post content"
+                      maxLength={100}
+                      onChange={(e) => setCaption(e.target.value)}
+                    />
+                    <div className="flex justify-between">
+                      <button
+                        className="bg-gray-700 text-white font-semibold px-5 py-3 rounded-lg hover:bg-gray-800 w-max"
+                        onClick={() => imageRef.current.click()}
+                      >
+                        Add Image
+                      </button>
+                      <input ref={imageRef} hidden type="file" />
+                      <button
+                        className="bg-blue-500 text-white font-semibold px-5 py-3 rounded-lg hover:bg-blue-600 w-max"
+                        onClick={submitHandler}
+                      >
+                        Post
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+      </section>
       <section className="flex flex-col">
         <div className="flex w-full py-3 px-6">
           <Avatar className="w-9 h-9">

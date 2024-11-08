@@ -17,7 +17,7 @@ export const createPost = async (req, res) => {
     const { caption, img } = req.body;
 
     if (!caption && !img) {
-      return res.status(400).send("Caption or image is required");
+      return res.status(400).json({ error: "Caption or image is required" });
     }
 
     const newPost = new Post({ caption, img, userId });
