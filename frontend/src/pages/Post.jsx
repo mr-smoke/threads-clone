@@ -4,10 +4,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import useGetPost from "@/hooks/useGetPost";
 import { FaEllipsisH } from "react-icons/fa";
 
 const Post = () => {
-  const post = {
+  const { post, isLoading } = useGetPost();
+
+  const posts = {
     images: [
       "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       "https://images.pexels.com/photos/28970213/pexels-photo-28970213.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -44,17 +47,17 @@ const Post = () => {
                   etiam, ac nunc, eget.
                 </p>
                 <div className="flex pt-3">
-                  {post.images.length === 1 ? (
+                  {posts.images.length === 1 ? (
                     <img
-                      src={post.images[0]}
+                      src={posts.images[0]}
                       alt="Image 1"
                       className="max-h-[430px] object-cover rounded-lg"
                     />
                   ) : (
                     <>
-                      {post.images.length === 2 ? (
+                      {posts.images.length === 2 ? (
                         <div className="flex gap-2">
-                          {post.images.map((image, index) => (
+                          {posts.images.map((image, index) => (
                             <img
                               key={index}
                               src={image}
@@ -65,7 +68,7 @@ const Post = () => {
                         </div>
                       ) : (
                         <div className="flex gap-2 overflow-x-auto w-full">
-                          {post.images.map((image, index) => (
+                          {posts.images.map((image, index) => (
                             <img
                               key={index}
                               src={image}
@@ -108,7 +111,7 @@ const Post = () => {
                   </p>
                   <div className="flex pt-3">
                     <img
-                      src={post.images[0]}
+                      src={posts.images[0]}
                       alt="Image 1"
                       className="max-h-[430px] object-cover rounded-lg"
                     />
