@@ -14,9 +14,12 @@ import {
 import { FaEllipsisH } from "react-icons/fa";
 import { IoEllipsisHorizontalCircle } from "react-icons/io5";
 import useGetProfile from "@/hooks/useGetProfile";
+import useGetUserPosts from "@/hooks/useGetUserPosts";
 
 const Profile = () => {
   const { profile, isLoading } = useGetProfile();
+  const { posts, isLoading: isPostsLoading } = useGetUserPosts();
+
   const post = {
     images: [
       "https://images.pexels.com/photos/1115804/pexels-photo-1115804.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
