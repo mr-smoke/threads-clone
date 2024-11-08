@@ -4,11 +4,15 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useAuth } from "@/context/AuthContext";
+import useDeletePost from "@/hooks/useDeletePost";
 import useGetPost from "@/hooks/useGetPost";
 import { FaEllipsisH } from "react-icons/fa";
 
 const Post = () => {
   const { post, isLoading } = useGetPost();
+  const { user } = useAuth();
+  const { deletePost } = useDeletePost();
 
   const posts = {
     images: [
@@ -35,7 +39,18 @@ const Post = () => {
                     <FaEllipsisH size={20} className="text-gray-500" />
                   </PopoverTrigger>
                   <PopoverContent className="bg-gray-900 text-white border-gray-800 items-end">
-                    Place content for the popover here.
+                    {post?.userId === user?._id ? (
+                      <button
+                        className="flex items-center w-full px-4 py-2 text-sm text-left"
+                        onClick={() => deletePost(post._id)}
+                      >
+                        Delete
+                      </button>
+                    ) : (
+                      <button className="flex items-center w-full px-4 py-2 text-sm text-left">
+                        Report
+                      </button>
+                    )}
                   </PopoverContent>
                 </Popover>
               </div>

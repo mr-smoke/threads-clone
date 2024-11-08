@@ -62,16 +62,18 @@ export const deletePost = async (req, res) => {
   try {
     const post = await Post.findOne({ _id: id }).exec();
 
+    console.log(post);
+
     if (!post) {
-      return res.status(404).send("Post not found");
+      return res.status(404).json({ error: "Post not found" });
     }
 
     if (post.userId.toString() !== userId.toString()) {
-      return res.status(401).send("You are not authorized to delete this post");
+      return res.status(401).json({ error: "Unauthorized" });
     }
 
     await Post.findByIdAndDelete(id);
-    return res.status(200).send("Post deleted");
+    return res.status(200).json({ message: "Post deleted" });
   } catch (error) {
     return res.status(500).send(error.message);
   }
