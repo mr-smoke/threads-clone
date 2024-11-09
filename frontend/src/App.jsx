@@ -6,11 +6,13 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import UpdateUser from "./pages/UpdateUser";
 import { Toaster } from "./components/ui/toaster";
+import Sidebar from "./components/Sidebar";
 
 function App() {
   return (
     <>
       <div className="bg-black text-white min-h-screen flex justify-center">
+        <Sidebar />
         <div className="w-[620px] flex flex-col">
           <header className="flex justify-center pt-6 pb-12">
             <img src="/light-logo.svg" alt="logo" className="w-6 h-6" />

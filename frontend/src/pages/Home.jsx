@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/popover";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -20,21 +21,15 @@ import {
 } from "react-icons/fa6";
 import { FaEllipsisH } from "react-icons/fa";
 import useGetFeed from "@/hooks/useGetFeed";
-import { useRef, useState } from "react";
-import useCreatePost from "@/hooks/useCreatePost";
+import { useState } from "react";
 import useLogout from "@/hooks/useLogout";
+import { useAuth } from "@/context/AuthContext";
 
 const Home = () => {
+  const { user } = useAuth();
   const [caption, setCaption] = useState("");
   const { feed, isLoading } = useGetFeed();
-  const { createPost, isLoading: isCreatingPost } = useCreatePost();
   const { handleLogout } = useLogout();
-  const imageRef = useRef(null);
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    createPost({ caption });
-  };
 
   const post = {
     images: [
@@ -44,55 +39,21 @@ const Home = () => {
   };
   return (
     <main className="flex flex-col justify-center bg-gray-900 rounded-xl">
-      <section className="absolute bottom-3 right-3">
+      <section className="absolute top-3 right-3">
+        {!user && (
+          <a href="/login">
+            <button className="bg-white text-black font-semibold h-8 px-4 rounded-lg">
+              Login
+            </button>
+          </a>
+        )}
         <Dialog>
           <DialogTrigger>
-            <button className="bg-gray-800 text-white px-4 py-2 rounded-lg">
-              Create Post
-            </button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>
-                <h1 className="text-2xl font-semibold">Create Post</h1>
-              </DialogTitle>
-              <DialogDescription>
-                <form>
-                  <div className="flex flex-col gap-3">
-                    <textarea
-                      className="border rounded-lg p-2 text-base text-black"
-                      placeholder="Post content"
-                      maxLength={100}
-                      onChange={(e) => setCaption(e.target.value)}
-                    />
-                    <div className="flex justify-between">
-                      <button
-                        className="bg-gray-700 text-white font-semibold px-5 py-3 rounded-lg hover:bg-gray-800 w-max"
-                        onClick={() => imageRef.current.click()}
-                      >
-                        Add Image
-                      </button>
-                      <input ref={imageRef} hidden type="file" />
-                      <button
-                        className="bg-blue-500 text-white font-semibold px-5 py-3 rounded-lg hover:bg-blue-600 w-max"
-                        onClick={submitHandler}
-                      >
-                        Post
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </DialogDescription>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
-      </section>
-      <section className="absolute bottom-3 left-3">
-        <Dialog>
-          <DialogTrigger>
-            <button className="bg-gray-800 text-white px-4 py-2 rounded-lg">
-              Logout
-            </button>
+            {user && (
+              <button className="bg-white text-black font-semibold h-8 px-4 rounded-lg">
+                Logout
+              </button>
+            )}
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
@@ -103,15 +64,19 @@ const Home = () => {
               </DialogTitle>
               <DialogDescription>
                 <div className="flex justify-between">
-                  <button className="bg-gray-700 text-white font-semibold px-5 py-3 rounded-lg hover:bg-gray-800 w-max">
-                    Cancel
-                  </button>
-                  <button
-                    className="bg-blue-500 text-white font-semibold px-5 py-3 rounded-lg hover:bg-blue-600 w-max"
-                    onClick={handleLogout}
-                  >
-                    Logout
-                  </button>
+                  <DialogClose asChild>
+                    <button className="bg-gray-700 text-white font-semibold px-5 py-3 rounded-lg hover:bg-gray-800 w-max">
+                      Cancel
+                    </button>
+                  </DialogClose>
+                  <DialogClose asChild>
+                    <button
+                      className="bg-blue-500 text-white font-semibold px-5 py-3 rounded-lg hover:bg-blue-600 w-max"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </button>
+                  </DialogClose>
                 </div>
               </DialogDescription>
             </DialogHeader>

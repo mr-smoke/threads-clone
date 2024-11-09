@@ -26,6 +26,7 @@ const useCreatePost = () => {
         toast({
           description: "Post created successfully",
         });
+        window.location.href = "/";
       }
     } catch (error) {
       toast({
