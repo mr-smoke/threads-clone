@@ -7,12 +7,14 @@ import {
 import { useAuth } from "@/context/AuthContext";
 import useDeletePost from "@/hooks/useDeletePost";
 import useGetPost from "@/hooks/useGetPost";
+import useLikePost from "@/hooks/useLikePost";
 import { FaEllipsisH } from "react-icons/fa";
 
 const Post = () => {
   const { post, isLoading } = useGetPost();
   const { user } = useAuth();
   const { deletePost } = useDeletePost();
+  const { likePost } = useLikePost();
 
   const posts = {
     images: [
@@ -97,6 +99,12 @@ const Post = () => {
                   )}
                 </div>
               </div>
+            </div>
+            <div className="flex items-center justify-between pt-3">
+              <button className="flex items-center" onClick={likePost}>
+                Like
+              </button>
+              {post?.likes.length}
             </div>
           </div>
           <div className="flex flex-col">

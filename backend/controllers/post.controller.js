@@ -87,7 +87,7 @@ export const likePost = async (req, res) => {
     const post = await Post.findOne({ _id: id }).exec();
 
     if (!post) {
-      return res.status(404).send("Post not found");
+      return res.status(404).json({ error: "Post not found" });
     }
 
     const isLiked = post.likes.find(
@@ -98,11 +98,11 @@ export const likePost = async (req, res) => {
         (like) => like.userId.toString() !== userId.toString()
       );
       await post.save();
-      return res.status(200).send("Unliked");
+      return res.status(200).json({ message: "Unliked" });
     } else {
       post.likes.push({ userId, img, username });
       await post.save();
-      return res.status(200).send("Liked");
+      return res.status(200).json({ message: "Liked" });
     }
   } catch (error) {
     return res.status(500).send(error.message);

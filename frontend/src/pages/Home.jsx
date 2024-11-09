@@ -22,11 +22,13 @@ import { FaEllipsisH } from "react-icons/fa";
 import useGetFeed from "@/hooks/useGetFeed";
 import { useRef, useState } from "react";
 import useCreatePost from "@/hooks/useCreatePost";
+import useLogout from "@/hooks/useLogout";
 
 const Home = () => {
   const [caption, setCaption] = useState("");
   const { feed, isLoading } = useGetFeed();
   const { createPost, isLoading: isCreatingPost } = useCreatePost();
+  const { handleLogout } = useLogout();
   const imageRef = useRef(null);
 
   const submitHandler = (e) => {
@@ -80,6 +82,37 @@ const Home = () => {
                     </div>
                   </div>
                 </form>
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+      </section>
+      <section className="absolute bottom-3 left-3">
+        <Dialog>
+          <DialogTrigger>
+            <button className="bg-gray-800 text-white px-4 py-2 rounded-lg">
+              Logout
+            </button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>
+                <h1 className="text-2xl font-semibold">
+                  Do you want to logout?
+                </h1>
+              </DialogTitle>
+              <DialogDescription>
+                <div className="flex justify-between">
+                  <button className="bg-gray-700 text-white font-semibold px-5 py-3 rounded-lg hover:bg-gray-800 w-max">
+                    Cancel
+                  </button>
+                  <button
+                    className="bg-blue-500 text-white font-semibold px-5 py-3 rounded-lg hover:bg-blue-600 w-max"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </div>
               </DialogDescription>
             </DialogHeader>
           </DialogContent>
