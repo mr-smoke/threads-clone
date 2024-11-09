@@ -117,18 +117,18 @@ export const commentPost = async (req, res) => {
     const { comment } = req.body;
 
     if (!comment) {
-      return res.status(400).send("Comment is required");
+      return res.status(400).json({ error: "Comment is required" });
     }
 
     const post = await Post.findOne({ _id: id }).exec();
 
     if (!post) {
-      return res.status(404).send("Post not found");
+      return res.status(404).json({ error: "Post not found" });
     }
 
     post.comments.push({ userId, comment, img, username });
     await post.save();
-    return res.status(200).send("Comment added");
+    return res.status(200).json("Comment added");
   } catch (error) {
     return res.status(500).send(error.message);
   }

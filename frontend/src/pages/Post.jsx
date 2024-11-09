@@ -4,17 +4,35 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useAuth } from "@/context/AuthContext";
 import useDeletePost from "@/hooks/useDeletePost";
 import useGetPost from "@/hooks/useGetPost";
 import useLikePost from "@/hooks/useLikePost";
 import { FaEllipsisH } from "react-icons/fa";
+import useCommentPost from "@/hooks/useCommentPost";
+import { useRef, useState } from "react";
 
 const Post = () => {
+  const [comment, setComment] = useState("");
   const { post, isLoading } = useGetPost();
   const { user } = useAuth();
   const { deletePost } = useDeletePost();
   const { likePost } = useLikePost();
+  const { commentPost } = useCommentPost();
+  const imageRef = useRef(null);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    commentPost({ comment });
+  };
 
   const posts = {
     images: [
@@ -100,11 +118,57 @@ const Post = () => {
                 </div>
               </div>
             </div>
-            <div className="flex items-center justify-between pt-3">
-              <button className="flex items-center" onClick={likePost}>
-                Like
-              </button>
-              {post?.likes.length}
+            <div className="flex items-center pt-3 gap-3">
+              <div className="flex items-center gap-2">
+                <button className="flex items-center" onClick={likePost}>
+                  Like
+                </button>
+                {post?.likes.length}
+              </div>
+              <div className="flex items-center gap-2">
+                <Dialog>
+                  <DialogTrigger>
+                    <button className="bg-gray-800 text-white px-4 py-2 rounded-lg">
+                      Comment
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>
+                        <h1 className="text-2xl font-semibold">Comments</h1>
+                      </DialogTitle>
+                      <DialogDescription>
+                        <form>
+                          <div className="flex flex-col gap-3">
+                            <textarea
+                              className="border rounded-lg p-2 text-base text-black"
+                              placeholder="Post content"
+                              maxLength={100}
+                              onChange={(e) => setComment(e.target.value)}
+                            />
+                            <div className="flex justify-between">
+                              <button
+                                className="bg-gray-700 text-white font-semibold px-5 py-3 rounded-lg hover:bg-gray-800 w-max"
+                                onClick={() => imageRef.current.click()}
+                              >
+                                Add Image
+                              </button>
+                              <input ref={imageRef} hidden type="file" />
+                              <button
+                                className="bg-blue-500 text-white font-semibold px-5 py-3 rounded-lg hover:bg-blue-600 w-max"
+                                onClick={submitHandler}
+                              >
+                                Post
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </DialogDescription>
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
+                {post?.comments.length}
+              </div>
             </div>
           </div>
           <div className="flex flex-col">
