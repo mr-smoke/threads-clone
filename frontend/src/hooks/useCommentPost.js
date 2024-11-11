@@ -1,15 +1,13 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 
 const useCommentPost = () => {
   const [isLoading, setIsLoading] = useState();
-  const { id } = useParams();
   const { toast } = useToast();
 
-  const commentPost = async (comment) => {
-    setIsLoading(true);
+  const commentPost = async (comment, id) => {
     try {
+      setIsLoading(true);
       const response = await fetch(
         `http://localhost:3000/api/post/comment/${id}`,
         {

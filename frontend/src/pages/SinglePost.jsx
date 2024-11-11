@@ -20,7 +20,7 @@ import { FaEllipsisH } from "react-icons/fa";
 import useCommentPost from "@/hooks/useCommentPost";
 import { useRef, useState } from "react";
 
-const Post = () => {
+const SinglePost = () => {
   const [comment, setComment] = useState("");
   const { post, isLoading } = useGetPost();
   const { user } = useAuth();
@@ -213,4 +213,4 @@ const Post = () => {
   );
 };
 
-export default Post;
+export default SinglePost;

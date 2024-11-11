@@ -1,11 +1,9 @@
-import { useParams } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 
 const useLikePost = () => {
-  const { id } = useParams();
   const { toast } = useToast();
 
-  const likePost = async () => {
+  const likePost = async (id) => {
     try {
       const response = await fetch(
         `http://localhost:3000/api/post/like/${id}`,

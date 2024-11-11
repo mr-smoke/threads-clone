@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 
-const useGetProfile = () => {
+const useGetProfile = (id) => {
   const [profile, setProfile] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const { id } = useParams();
   const { toast } = useToast();
 
   useEffect(() => {

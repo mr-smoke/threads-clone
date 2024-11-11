@@ -7,7 +7,7 @@ const Header = () => {
   const path = location.pathname;
 
   return (
-    <header className="fixed w-full top-0 h-16 flex justify-center items-center">
+    <header className="fixed w-full top-0 h-16 flex justify-center items-center bg-black z-10">
       <div className="absolute flex justify-center md:left-4">
         <a href="/" className="flex justify-center">
           <img
