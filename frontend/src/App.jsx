@@ -8,6 +8,7 @@ import UpdateUser from "./pages/UpdateUser";
 import { Toaster } from "./components/ui/toaster";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
+import Freeze from "./pages/Freeze";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/update" element={<UpdateUser />} />
+            <Route path="/freeze" element={<Freeze />} />
           </Routes>
         </div>
       </div>
