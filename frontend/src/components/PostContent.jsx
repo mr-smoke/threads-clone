@@ -1,4 +1,4 @@
-const PostComment = ({ post }) => {
+const PostContent = ({ post }) => {
   return (
     <div className="flex flex-col">
       <p>{post.caption}</p>
@@ -41,4 +41,4 @@ const PostComment = ({ post }) => {
   );
 };
 
-export default PostComment;
+export default PostContent;
