@@ -1,4 +1,3 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import useGetPost from "@/hooks/useGetPost";
 import PostActions from "@/components/PostActions";
 import PostInfo from "@/components/PostInfo";
@@ -19,11 +18,9 @@ const SinglePost = () => {
   return (
     <main className="flex flex-col justify-center pb-4 mb-10">
       <div className="flex flex-col items-center">
-        <section className="flex flex-col w-full py-3 px-6">
+        <section className="flex flex-col w-full py-3 px-6 relative">
           <div className="flex items-center">
-            <Avatar className="w-9 h-9">
-              <AvatarImage src="/light-logo.svg" />
-            </Avatar>
+            <div className="w-9 h-9"></div>
             <div className="flex-1 ml-2">
               <PostInfo post={post} />
             </div>

@@ -1,5 +1,4 @@
 import { useAuth } from "@/context/AuthContext";
-import useCommentPost from "@/hooks/useCommentPost";
 import useLikePost from "@/hooks/useLikePost";
 import { useEffect, useState } from "react";
 import { FaRegComment, FaRegHeart, FaRegPaperPlane } from "react-icons/fa6";
