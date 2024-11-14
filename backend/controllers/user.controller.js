@@ -151,14 +151,14 @@ export const followUser = async (req, res) => {
 
   try {
     if (userId.toString() === followId) {
-      return res.status(400).send("You cannot follow yourself");
+      return res.status(400).json({ error: "You cannot follow yourself" });
     }
 
     const user = await User.findById(userId).exec();
     const followUser = await User.findById(followId).exec();
 
     if (!user || !followUser) {
-      return res.status(404).send("User not found");
+      return res.status(404).json({ error: "User not found" });
     }
 
     const isFollowing = user.following.includes(followId);
@@ -167,12 +167,12 @@ export const followUser = async (req, res) => {
       await user.updateOne({ $pull: { following: followId } });
       await followUser.updateOne({ $pull: { followers: userId } });
 
-      return res.status(200).send("User unfollowed successfully");
+      return res.status(200).json("User unfollowed successfully");
     } else {
       await user.updateOne({ $push: { following: followId } });
       await followUser.updateOne({ $push: { followers: userId } });
 
-      return res.status(200).send("User followed successfully");
+      return res.status(200).json("User followed successfully");
     }
   } catch (error) {
     return res.status(500).send(error.message);

@@ -13,11 +13,34 @@ import { FaEllipsisH } from "react-icons/fa";
 import { useAuth } from "@/context/AuthContext";
 import useDeletePost from "@/hooks/useDeletePost";
 import useGetProfile from "@/hooks/useGetProfile";
+import useFollowUser from "@/hooks/useFollowUser";
+import { useEffect, useState } from "react";
 
 const PostInfo = ({ post }) => {
   const { profile, isLoading } = useGetProfile(post.userId);
   const { user } = useAuth();
   const { deletePost } = useDeletePost();
+  const { followUser } = useFollowUser();
+  const [followed, setFollowed] = useState(false);
+  const [followersCount, setFollowersCount] = useState(0);
+
+  useEffect(() => {
+    if (isLoading) return;
+    setFollowersCount(profile.followers.length);
+    if (profile.followers.includes(user._id)) {
+      setFollowed(true);
+    } else {
+      setFollowed(false);
+    }
+  }, [profile.followers, user?._id]);
+
+  const handleFollow = () => {
+    followUser(profile._id);
+    setFollowed((prevFollowed) => !prevFollowed);
+    setFollowersCount((prevCount) =>
+      followed ? prevCount - 1 : prevCount + 1
+    );
+  };
 
   return (
     <>
@@ -46,16 +69,13 @@ const PostInfo = ({ post }) => {
                   </Avatar>
                 </div>
                 <p>{profile.bio}</p>
-                <p className="text-gray-500">
-                  {profile.followers?.length} followers
-                </p>
+                <p className="text-gray-500">{followersCount} followers</p>
                 {profile._id !== user?._id && (
-                  <button className="text-white bg-blue-500 px-4 py-1 rounded-md">
-                    {profile.followers?.some(
-                      (follower) => follower.userId === user?._id
-                    )
-                      ? "Unfollow"
-                      : "Follow"}
+                  <button
+                    className="text-white bg-blue-500 px-4 py-1 rounded-md"
+                    onClick={handleFollow}
+                  >
+                    {followed ? "Unfollow" : "Follow"}
                   </button>
                 )}
               </div>
