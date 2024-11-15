@@ -52,11 +52,18 @@ const ProfileInfo = () => {
             </PopoverTrigger>
             <PopoverContent className="bg-gray-900 text-white border-gray-800 items-end">
               {isOwner ? (
-                <a href="/freeze">
-                  <button className="w-full py-2 px-4 text-left hover:bg-gray-800">
-                    Freeze Account
-                  </button>
-                </a>
+                <>
+                  <a href="/freeze">
+                    <button className="w-full py-2 px-4 text-left hover:bg-gray-800">
+                      Freeze Account
+                    </button>
+                  </a>
+                  <a href="/update">
+                    <button className="w-full py-2 px-4 text-left hover:bg-gray-800">
+                      Update Profile
+                    </button>
+                  </a>
+                </>
               ) : (
                 <button
                   className="w-full py-2 px-4 text-left hover:bg-gray-800"

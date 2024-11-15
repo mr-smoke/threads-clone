@@ -16,7 +16,7 @@ const SinglePost = () => {
   }
 
   return (
-    <main className="flex flex-col justify-center pb-4 mb-10">
+    <main className="flex flex-col justify-center">
       <div className="flex flex-col items-center">
         <section className="flex flex-col w-full py-3 px-6 relative">
           <div className="flex items-center">

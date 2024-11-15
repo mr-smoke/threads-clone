@@ -9,7 +9,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { FaEllipsisH } from "react-icons/fa";
+import { FaEllipsisH, FaExclamationTriangle, FaTrash } from "react-icons/fa";
 import { useAuth } from "@/context/AuthContext";
 import useDeletePost from "@/hooks/useDeletePost";
 import useGetProfile from "@/hooks/useGetProfile";
@@ -81,23 +81,27 @@ const PostInfo = ({ post }) => {
               </div>
             </HoverCardContent>
           </HoverCard>
-          <p className="ml-2 text-gray-500">2h</p>
+          <a href={`/post/${post._id}`}>
+            <p className="ml-2 text-gray-500 hover:underline">2h</p>
+          </a>
         </div>
         <Popover>
           <PopoverTrigger>
             <FaEllipsisH size={20} className="text-gray-500" />
           </PopoverTrigger>
-          <PopoverContent className="bg-gray-900 text-white border-gray-800 items-end">
+          <PopoverContent className="p-2 rounded-xl bg-gray-900 text-white border-gray-800 items-end">
             {post.userId === user?._id ? (
               <button
-                className="flex items-center w-full px-4 py-2 text-sm text-left"
+                className="flex justify-between items-center w-full px-4 py-2 font-semibold text-red-600 rounded-lg hover:bg-gray-800"
                 onClick={() => deletePost(post._id)}
               >
                 Delete
+                <FaTrash />
               </button>
             ) : (
-              <button className="flex items-center w-full px-4 py-2 text-sm text-left">
+              <button className="flex justify-between items-center w-full px-4 py-2 font-semibold text-red-600 rounded-lg hover:bg-gray-800">
                 Report
+                <FaExclamationTriangle />
               </button>
             )}
           </PopoverContent>

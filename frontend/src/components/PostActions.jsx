@@ -1,14 +1,26 @@
 import { useAuth } from "@/context/AuthContext";
 import useLikePost from "@/hooks/useLikePost";
 import { useEffect, useState } from "react";
-import { FaRegComment, FaRegHeart, FaRegPaperPlane } from "react-icons/fa6";
+import {
+  FaRegComment,
+  FaRegHeart,
+  FaRegPaperPlane,
+  FaCopy,
+} from "react-icons/fa6";
 import CreateComment from "./CreateComment";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { useToast } from "@/hooks/use-toast";
 
 const PostActions = ({ post }) => {
   const { user } = useAuth();
   const { likePost } = useLikePost();
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(post.likes.length);
+  const { toast } = useToast();
 
   useEffect(() => {
     if (user) {
@@ -24,6 +36,9 @@ const PostActions = ({ post }) => {
 
   const copyLink = () => {
     navigator.clipboard.writeText(`http://localhost:5173/post/${post._id}`);
+    toast({
+      description: "Copied to clipboard",
+    });
   };
 
   return (
@@ -47,11 +62,23 @@ const PostActions = ({ post }) => {
         <CreateComment postId={post._id} />
         {post.comments.length}
       </div>
-      <div className="flex items-center">
-        <button onClick={copyLink}>
+      <Popover>
+        <PopoverTrigger>
           <FaRegPaperPlane size={17} />
-        </button>
-      </div>
+        </PopoverTrigger>
+        <PopoverContent
+          align="start"
+          className="p-2 rounded-xl bg-gray-900 text-white border-gray-800"
+        >
+          <button
+            className="flex justify-between items-center w-full px-4 py-2 font-semibold  rounded-lg hover:bg-gray-800"
+            onClick={copyLink}
+          >
+            Copy Tweet link
+            <FaCopy />
+          </button>
+        </PopoverContent>
+      </Popover>
     </div>
   );
 };
