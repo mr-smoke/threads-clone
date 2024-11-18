@@ -29,6 +29,10 @@ const PostActions = ({ post }) => {
   }, [user, post.likes]);
 
   const handleLike = () => {
+    if (!user) {
+      window.location.href = "/login";
+      return;
+    }
     likePost(post._id);
     setLiked((prevLiked) => !prevLiked);
     setLikesCount((prevCount) => (liked ? prevCount - 1 : prevCount + 1));
@@ -74,7 +78,7 @@ const PostActions = ({ post }) => {
             className="flex justify-between items-center w-full px-4 py-2 font-semibold  rounded-lg hover:bg-gray-800"
             onClick={copyLink}
           >
-            Copy Tweet link
+            Copy Post Link
             <FaCopy />
           </button>
         </PopoverContent>

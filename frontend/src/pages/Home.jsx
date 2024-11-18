@@ -1,9 +1,7 @@
 import useGetFeed from "@/hooks/useGetFeed";
-import { useState } from "react";
 import Post from "@/components/Post";
 
 const Home = () => {
-  const [caption, setCaption] = useState("");
   const { feed, isLoading } = useGetFeed();
 
   return (

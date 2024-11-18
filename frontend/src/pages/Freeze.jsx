@@ -1,7 +1,8 @@
+import Loading from "@/components/Loading";
 import useFreeze from "@/hooks/useFreeze";
 
 const Freeze = () => {
-  const { freeze } = useFreeze();
+  const { freeze, isLoading } = useFreeze();
 
   return (
     <main className="flex flex-col justify-center">
@@ -12,10 +13,11 @@ const Freeze = () => {
           decide to unfreeze it.
         </p>
         <button
-          className="mt-4 w-full py-2 px-4 bg-red-500 text-white rounded-lg"
+          className="mt-4 w-full py-2 px-4 bg-red-500 font-semibold rounded-lg hover:bg-red-600"
           onClick={freeze}
+          disabled={isLoading}
         >
-          Freeze Account
+          {isLoading ? <Loading /> : "Freeze Account"}
         </button>
       </section>
     </main>

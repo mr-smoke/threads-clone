@@ -27,7 +27,7 @@ const PostInfo = ({ post }) => {
   useEffect(() => {
     if (isLoading) return;
     setFollowersCount(profile.followers.length);
-    if (profile.followers.includes(user._id)) {
+    if (profile.followers.includes(user?._id)) {
       setFollowed(true);
     } else {
       setFollowed(false);
@@ -70,7 +70,7 @@ const PostInfo = ({ post }) => {
                 </div>
                 <p>{profile.bio}</p>
                 <p className="text-gray-500">{followersCount} followers</p>
-                {profile._id !== user?._id && (
+                {user && profile._id !== user?._id && (
                   <button
                     className="text-white bg-blue-500 px-4 py-1 rounded-md"
                     onClick={handleFollow}
