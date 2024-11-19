@@ -37,7 +37,7 @@ const Auth = () => {
               <h1 className="text-2xl font-semibold">Do you want to logout?</h1>
             </DialogTitle>
             <DialogDescription>
-              <div className="flex justify-between">
+              <div className="flex justify-end gap-3 pt-3">
                 <DialogClose asChild>
                   <button className="bg-gray-700 text-white font-semibold px-5 py-3 rounded-lg hover:bg-gray-800 w-max">
                     Cancel

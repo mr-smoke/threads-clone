@@ -28,6 +28,7 @@ const useLogin = () => {
         toast({
           description: "Logged in successfully",
         });
+        window.location.href = "/";
         setUser(data);
       }
     } catch (error) {

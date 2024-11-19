@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import useSignup from "@/hooks/useSignup";
 import { useState } from "react";
 
@@ -39,6 +40,7 @@ const Signup = () => {
                 className="p-2 rounded-lg text-black"
                 type="password"
                 id="password"
+                minLength={6}
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
                 }
@@ -50,6 +52,7 @@ const Signup = () => {
                 className="p-2 rounded-lg text-black"
                 type="password"
                 id="confirm-password"
+                minLength={6}
                 onChange={(e) =>
                   setFormData({ ...formData, confirmPassword: e.target.value })
                 }
@@ -89,8 +92,9 @@ const Signup = () => {
           <button
             className="mt-3 bg-blue-500 text-white px-5 py-3 rounded-lg w-max self-center hover:bg-blue-600"
             type="submit"
+            disabled={isLoading}
           >
-            Signup
+            {isLoading ? <Loading /> : "Signup"}
           </button>
         </form>
       </main>

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import useLogin from "@/hooks/useLogin";
+import Loading from "@/components/Loading";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const { handleLogin } = useLogin();
+  const { handleLogin, isLoading } = useLogin();
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -49,8 +50,9 @@ const Login = () => {
           <button
             className="mt-3 bg-blue-500 text-white px-5 py-3 rounded-lg w-max self-center hover:bg-blue-600"
             type="submit"
+            disabled={isLoading}
           >
-            Login
+            {isLoading ? <Loading /> : "Login"}
           </button>
         </form>
       </main>
