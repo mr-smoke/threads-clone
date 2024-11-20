@@ -15,32 +15,44 @@ import useDeletePost from "@/hooks/useDeletePost";
 import useGetProfile from "@/hooks/useGetProfile";
 import useFollowUser from "@/hooks/useFollowUser";
 import { useEffect, useState } from "react";
+import { Skeleton } from "./ui/skeleton";
 
 const PostInfo = ({ post }) => {
-  const { profile, isLoading } = useGetProfile(post.userId);
-  const { user } = useAuth();
+  const { profile, isLoading: profileIsLoading } = useGetProfile(post.userId);
+  const { user, isLoading: userIsLoading } = useAuth();
   const { deletePost } = useDeletePost();
   const { followUser } = useFollowUser();
   const [followed, setFollowed] = useState(false);
   const [followersCount, setFollowersCount] = useState(0);
 
   useEffect(() => {
-    if (isLoading) return;
-    setFollowersCount(profile.followers.length);
-    if (profile.followers.includes(user?._id)) {
+    if (profile.followers?.includes(user?._id)) {
       setFollowed(true);
     } else {
       setFollowed(false);
     }
-  }, [profile.followers, user?._id]);
+    setFollowersCount(profile.followers?.length);
+  }, [profileIsLoading, userIsLoading]);
 
   const handleFollow = () => {
+    if (!user) {
+      window.location.href = "/login";
+    }
     followUser(profile._id);
     setFollowed((prevFollowed) => !prevFollowed);
     setFollowersCount((prevCount) =>
       followed ? prevCount - 1 : prevCount + 1
     );
   };
+
+  if (profileIsLoading) {
+    return (
+      <>
+        <Skeleton className="h-9 w-9 rounded-full absolute top-3 left-6" />
+        <Skeleton className="h-4 w-[150px]" />
+      </>
+    );
+  }
 
   return (
     <>
@@ -70,7 +82,7 @@ const PostInfo = ({ post }) => {
                 </div>
                 <p>{profile.bio}</p>
                 <p className="text-gray-500">{followersCount} followers</p>
-                {user && profile._id !== user?._id && (
+                {profile._id !== user?._id && (
                   <button
                     className="text-white bg-blue-500 px-4 py-1 rounded-md"
                     onClick={handleFollow}
