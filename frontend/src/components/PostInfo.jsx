@@ -16,10 +16,11 @@ import useGetProfile from "@/hooks/useGetProfile";
 import useFollowUser from "@/hooks/useFollowUser";
 import { useEffect, useState } from "react";
 import { Skeleton } from "./ui/skeleton";
+import { formatDistanceToNow } from "date-fns";
 
 const PostInfo = ({ post }) => {
-  const { profile, isLoading: profileIsLoading } = useGetProfile(post.userId);
-  const { user, isLoading: userIsLoading } = useAuth();
+  const { profile, isLoading } = useGetProfile(post.userId);
+  const { user } = useAuth();
   const { deletePost } = useDeletePost();
   const { followUser } = useFollowUser();
   const [followed, setFollowed] = useState(false);
@@ -32,7 +33,7 @@ const PostInfo = ({ post }) => {
       setFollowed(false);
     }
     setFollowersCount(profile.followers?.length);
-  }, [profileIsLoading, userIsLoading]);
+  }, [profile, user]);
 
   const handleFollow = () => {
     if (!user) {
@@ -45,7 +46,7 @@ const PostInfo = ({ post }) => {
     );
   };
 
-  if (profileIsLoading) {
+  if (isLoading) {
     return (
       <>
         <Skeleton className="h-9 w-9 rounded-full absolute top-3 left-6" />
@@ -94,7 +95,9 @@ const PostInfo = ({ post }) => {
             </HoverCardContent>
           </HoverCard>
           <a href={`/post/${post._id}`}>
-            <p className="ml-2 text-gray-500 hover:underline">2h</p>
+            <p className="ml-2 text-gray-500 hover:underline">
+              {formatDistanceToNow(new Date(post.createdAt))} ago
+            </p>
           </a>
         </div>
         <Popover>

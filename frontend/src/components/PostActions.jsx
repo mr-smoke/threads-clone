@@ -20,12 +20,11 @@ const PostActions = ({ post }) => {
   const { likePost } = useLikePost();
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(post.likes.length);
+  const [commentsCount, setCommentsCount] = useState(post.comments.length);
   const { toast } = useToast();
 
   useEffect(() => {
-    if (user) {
-      setLiked(post.likes.some((like) => like.userId === user._id));
-    }
+    setLiked(post.likes.some((like) => like.userId === user?._id));
   }, [user, post.likes]);
 
   const handleLike = () => {
@@ -63,8 +62,8 @@ const PostActions = ({ post }) => {
         {likesCount}
       </div>
       <div className="flex items-center gap-1.5">
-        <CreateComment postId={post._id} />
-        {post.comments.length}
+        <CreateComment postId={post._id} setCommentsCount={setCommentsCount} />
+        {commentsCount}
       </div>
       <Popover>
         <PopoverTrigger>

@@ -10,15 +10,18 @@ import {
 import useCommentPost from "@/hooks/useCommentPost";
 import { useRef, useState } from "react";
 
-const CreateComment = ({ postId }) => {
+const CreateComment = ({ postId, setCommentsCount }) => {
   const [comment, setComment] = useState("");
   const { commentPost } = useCommentPost();
   const imageRef = useRef(null);
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    commentPost({ comment }, postId);
-    setComment("");
+    const res = await commentPost({ comment }, postId);
+    if (res) {
+      setComment("");
+      setCommentsCount((prevCount) => prevCount + 1);
+    }
   };
 
   return (

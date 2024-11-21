@@ -25,16 +25,19 @@ const useCommentPost = () => {
         toast({
           description: data.error,
         });
+        return false;
       } else {
         toast({
           description: "Comment added",
         });
+        return true;
       }
     } catch (error) {
       toast({
         description: error.message,
       });
       console.error(error);
+      return false;
     } finally {
       setIsLoading(false);
     }
