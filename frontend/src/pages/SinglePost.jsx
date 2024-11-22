@@ -3,12 +3,15 @@ import PostActions from "@/components/PostActions";
 import PostInfo from "@/components/PostInfo";
 import PostContent from "@/components/PostContent";
 import Comment from "@/components/Comment";
+import Loading from "@/components/Loading";
 
 const SinglePost = () => {
   const { post, isLoading } = useGetPost();
 
+  console.log(post);
+
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   if (!post) {

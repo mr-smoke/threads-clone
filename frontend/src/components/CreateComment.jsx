@@ -53,7 +53,7 @@ const CreateComment = ({ postId, setCommentsCount }) => {
                 />
                 <div className="flex justify-between">
                   <button
-                    className="bg-gray-700 text-white font-semibold px-5 py-3 rounded-lg hover:bg-gray-800 w-max"
+                    className="bg-neutral-700 text-white font-semibold px-5 py-3 rounded-lg hover:bg-neutral-800 w-max"
                     onClick={() => imageRef.current.click()}
                   >
                     Add Image

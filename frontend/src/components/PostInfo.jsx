@@ -82,7 +82,7 @@ const PostInfo = ({ post }) => {
                   </Avatar>
                 </div>
                 <p>{profile.bio}</p>
-                <p className="text-gray-500">{followersCount} followers</p>
+                <p className="text-neutral-500">{followersCount} followers</p>
                 {profile._id !== user?._id && (
                   <button
                     className="text-white bg-blue-500 px-4 py-1 rounded-md"
@@ -95,26 +95,26 @@ const PostInfo = ({ post }) => {
             </HoverCardContent>
           </HoverCard>
           <a href={`/post/${post._id}`}>
-            <p className="ml-2 text-gray-500 hover:underline">
+            <p className="ml-2 text-neutral-500 hover:underline">
               {formatDistanceToNow(new Date(post.createdAt))} ago
             </p>
           </a>
         </div>
         <Popover>
           <PopoverTrigger>
-            <FaEllipsisH size={20} className="text-gray-500" />
+            <FaEllipsisH size={20} className="text-neutral-500" />
           </PopoverTrigger>
-          <PopoverContent className="p-2 rounded-xl bg-gray-900 text-white border-gray-800 items-end">
+          <PopoverContent className="p-2 rounded-xl bg-neutral-900 text-white border-neutral-800 items-end">
             {post.userId === user?._id ? (
               <button
-                className="flex justify-between items-center w-full px-4 py-2 font-semibold text-red-600 rounded-lg hover:bg-gray-800"
+                className="flex justify-between items-center w-full px-4 py-2 font-semibold text-red-600 rounded-lg hover:bg-neutral-800"
                 onClick={() => deletePost(post._id)}
               >
                 Delete
                 <FaTrash />
               </button>
             ) : (
-              <button className="flex justify-between items-center w-full px-4 py-2 font-semibold text-red-600 rounded-lg hover:bg-gray-800">
+              <button className="flex justify-between items-center w-full px-4 py-2 font-semibold text-red-600 rounded-lg hover:bg-neutral-800">
                 Report
                 <FaExclamationTriangle />
               </button>

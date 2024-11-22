@@ -16,7 +16,7 @@ function App() {
       <div className="bg-black text-white min-h-screen flex justify-center">
         <Sidebar />
         <Header />
-        <div className="bg-gray-900 rounded-xl w-[620px] h-max flex flex-col mt-16">
+        <div className="bg-neutral-900 rounded-xl w-[620px] h-max flex flex-col mt-16">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/:id" element={<Profile />} />

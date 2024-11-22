@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 
 const UpdateUser = () => {
   const { user } = useAuth();
-  const { updateUser } = useUpdateUser();
+  const { updateUser, isLoading } = useUpdateUser();
   const [formData, setFormData] = useState({
     email: user?.email,
     name: user?.name,
@@ -19,7 +19,7 @@ const UpdateUser = () => {
   };
 
   return (
-    <main className="flex flex-col items-center bg-gray-900 rounded-xl">
+    <main className="flex flex-col items-center bg-neutral-900 rounded-xl">
       <section className="flex flex-col py-4 px-6">
         <h1 className="text-3xl font-bold text-center">Update Profile</h1>
         <form
@@ -34,7 +34,7 @@ const UpdateUser = () => {
             />
             <div className="flex flex-col justify-center flex-1 gap-1">
               <button
-                className="bg-gray-700 text-white font-semibold px-5 py-3 rounded-lg hover:bg-gray-800"
+                className="bg-neutral-700 text-white font-semibold px-5 py-3 rounded-lg hover:bg-neutral-800"
                 onClick={() => imageRef.current.click()}
               >
                 Change Image
@@ -94,14 +94,17 @@ const UpdateUser = () => {
             ></textarea>
           </div>
           <div className="flex justify-center gap-3">
-            <a href="/">
-              <button className="mt-3 bg-red-500 text-white font-semibold px-5 py-3 rounded-lg w-40 self-center hover:bg-red-600">
-                Cancel
-              </button>
-            </a>
+            <button
+              className="mt-3 bg-red-500 text-white font-semibold px-5 py-3 rounded-lg w-40 self-center hover:bg-red-600"
+              type="button"
+              onClick={() => (window.location.href = "/")}
+            >
+              Cancel
+            </button>
             <button
               className="mt-3 bg-green-500 text-white font-semibold px-5 py-3 rounded-lg w-40 self-center hover:bg-green-600"
               type="submit"
+              disabled={isLoading}
             >
               Update
             </button>

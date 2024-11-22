@@ -71,10 +71,10 @@ const PostActions = ({ post }) => {
         </PopoverTrigger>
         <PopoverContent
           align="start"
-          className="p-2 rounded-xl bg-gray-900 text-white border-gray-800"
+          className="p-2 rounded-xl bg-neutral-900 text-white border-neutral-800"
         >
           <button
-            className="flex justify-between items-center w-full px-4 py-2 font-semibold  rounded-lg hover:bg-gray-800"
+            className="flex justify-between items-center w-full px-4 py-2 font-semibold  rounded-lg hover:bg-neutral-800"
             onClick={copyLink}
           >
             Copy Post Link

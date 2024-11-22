@@ -3,22 +3,29 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Avatar, AvatarImage } from "./ui/avatar";
 
 const Comment = ({ comment }) => {
+  console.log(comment);
+
   return (
-    <div className="flex p-3 border-t border-gray-500">
+    <div className="flex py-3 px-6 border-t border-neutral-800">
       <Avatar className="w-9 h-9">
-        <AvatarImage src={comment.img} />
+        <a href={`/${comment.userId}`}>
+          <AvatarImage src={comment.img} />
+        </a>
       </Avatar>
       <div className="flex-1 flex flex-col ml-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <p className="font-semibold">{comment.username}</p>
-            <p className="ml-2 text-gray-500">2h</p>
+            <a href={`/${comment.userId}`}>
+              <p className="font-semibold hover:underline">
+                {comment.username}
+              </p>
+            </a>
           </div>
           <Popover>
             <PopoverTrigger>
-              <FaEllipsisH size={20} className="text-gray-500" />
+              <FaEllipsisH size={20} className="text-neutral-500" />
             </PopoverTrigger>
-            <PopoverContent className="bg-gray-900 text-white border-gray-800 items-end">
+            <PopoverContent className="bg-neutral-900 text-white border-neutral-800 items-end">
               Place content for the popover here.
             </PopoverContent>
           </Popover>

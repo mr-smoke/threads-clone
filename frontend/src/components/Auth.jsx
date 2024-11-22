@@ -43,7 +43,7 @@ const Auth = () => {
               <DialogDescription>
                 <div className="flex justify-end gap-3 pt-3">
                   <DialogClose asChild>
-                    <button className="bg-gray-700 text-white font-semibold px-5 py-3 rounded-lg hover:bg-gray-800 w-max">
+                    <button className="bg-neutral-700 text-white font-semibold px-5 py-3 rounded-lg hover:bg-neutral-800 w-max">
                       Cancel
                     </button>
                   </DialogClose>

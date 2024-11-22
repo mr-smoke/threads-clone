@@ -12,7 +12,7 @@ import { IoAdd } from "react-icons/io5";
 
 const CreatePost = () => {
   const [caption, setCaption] = useState("");
-  const { createPost, isLoading: isCreatingPost } = useCreatePost();
+  const { createPost, isLoading } = useCreatePost();
   const imageRef = useRef(null);
 
   const submitHandler = (e) => {
@@ -43,7 +43,7 @@ const CreatePost = () => {
                 />
                 <div className="flex justify-between">
                   <button
-                    className="bg-gray-700 text-white font-semibold px-5 py-3 rounded-lg hover:bg-gray-800 w-max"
+                    className="bg-neutral-700 text-white font-semibold px-5 py-3 rounded-lg hover:bg-neutral-800 w-max"
                     onClick={() => imageRef.current.click()}
                   >
                     Add Image
