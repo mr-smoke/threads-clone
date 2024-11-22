@@ -1,5 +1,6 @@
 import Post from "../models/post.model.js";
 import User from "../models/user.model.js";
+import { v2 as cloudinary } from "cloudinary";
 
 export const getFeed = async (req, res) => {
   try {
@@ -14,10 +15,16 @@ export const createPost = async (req, res) => {
   const userId = req.user._id;
 
   try {
-    const { caption, img } = req.body;
+    const { caption, image } = req.body;
+    let img = [];
 
-    if (!caption && !img) {
+    if (!caption && !image) {
       return res.status(400).json({ error: "Caption or image is required" });
+    }
+
+    if (image) {
+      const uploadedResponse = await cloudinary.uploader.upload(image);
+      img = uploadedResponse.secure_url;
     }
 
     const newPost = new Post({ caption, img, userId });
