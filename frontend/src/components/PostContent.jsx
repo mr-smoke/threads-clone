@@ -3,7 +3,7 @@ const PostContent = ({ post }) => {
     <a href={`/post/${post._id}`}>
       <div className="flex flex-col">
         <p>{post.caption}</p>
-        <div className="flex">
+        <div className="flex pt-1">
           {post.img.length === 1 ? (
             <img
               src={post.img[0]}

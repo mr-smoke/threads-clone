@@ -1,10 +1,13 @@
+import Loading from "@/components/Loading";
 import { useAuth } from "@/context/AuthContext";
 import useUpdateUser from "@/hooks/useUpdateUser";
+import useUploadImage from "@/hooks/useUploadImage";
 import { useRef, useState } from "react";
 
 const UpdateUser = () => {
   const { user } = useAuth();
   const { updateUser, isLoading } = useUpdateUser();
+  const { image, uploadImage } = useUploadImage();
   const [formData, setFormData] = useState({
     email: user?.email,
     name: user?.name,
@@ -15,7 +18,7 @@ const UpdateUser = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    updateUser(formData);
+    updateUser(formData, image);
   };
 
   return (
@@ -28,18 +31,25 @@ const UpdateUser = () => {
         >
           <div className="flex justify-between gap-10 w-full">
             <img
-              src="/noavatar.png"
+              src={user?.img}
               alt="Avatar"
-              className="w-20 h-20 rounded-full"
+              className="w-20 h-20 rounded-full object-cover"
             />
             <div className="flex flex-col justify-center flex-1 gap-1">
               <button
                 className="bg-neutral-700 text-white font-semibold px-5 py-3 rounded-lg hover:bg-neutral-800"
+                type="button"
                 onClick={() => imageRef.current.click()}
               >
                 Change Image
               </button>
-              <input ref={imageRef} hidden type="file" />
+              <input
+                ref={imageRef}
+                hidden
+                type="file"
+                accept="image/*"
+                onChange={uploadImage}
+              />
             </div>
           </div>
           <div className="flex flex-col gap-1">
@@ -106,7 +116,7 @@ const UpdateUser = () => {
               type="submit"
               disabled={isLoading}
             >
-              Update
+              {isLoading ? <Loading /> : "Update"}
             </button>
           </div>
         </form>

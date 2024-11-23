@@ -69,8 +69,6 @@ export const deletePost = async (req, res) => {
   try {
     const post = await Post.findOne({ _id: id }).exec();
 
-    console.log(post);
-
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
     }

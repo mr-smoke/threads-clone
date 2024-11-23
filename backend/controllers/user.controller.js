@@ -2,6 +2,7 @@ import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import tokenization from "../utils/tokenization.js";
 import mongoose from "mongoose";
+import { v2 as cloudinary } from "cloudinary";
 
 export const signup = async (req, res) => {
   try {
@@ -107,8 +108,9 @@ export const getUser = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-  const { name, username, email, bio } = req.body;
+  const { name, username, email, bio, image } = req.body;
   const userId = req.user._id;
+  let img;
 
   try {
     const user = await User.findById(userId).exec();
@@ -133,10 +135,21 @@ export const updateUser = async (req, res) => {
       return res.status(400).json({ error: "User already exists" });
     }
 
+    if (image) {
+      if (user.img) {
+        const publicId = user.img.split("/").pop().split(".")[0];
+        await cloudinary.uploader.destroy(publicId);
+      }
+
+      const uploadedResponse = await cloudinary.uploader.upload(image);
+      img = uploadedResponse.secure_url;
+    }
+
     user.name = name || user.name;
     user.username = username || user.username;
     user.email = email || user.email;
     user.bio = bio || user.bio;
+    user.img = img || user.img;
 
     await user.save();
     return res.status(200).json(user);

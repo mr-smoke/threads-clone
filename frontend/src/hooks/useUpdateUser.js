@@ -7,7 +7,7 @@ const useUpdateUser = () => {
   const { user, setUser } = useAuth();
   const { toast } = useToast();
 
-  const updateUser = async (formData) => {
+  const updateUser = async (formData, image) => {
     try {
       setIsLoading(true);
       const response = await fetch(
@@ -17,7 +17,7 @@ const useUpdateUser = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify({ ...formData, image }),
           credentials: "include",
         }
       );
@@ -32,6 +32,7 @@ const useUpdateUser = () => {
           description: "Profile updated successfully",
         });
         setUser(data);
+        window.location.reload();
       }
     } catch (error) {
       toast({

@@ -7,36 +7,20 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import useCreatePost from "@/hooks/useCreatePost";
-import { set } from "date-fns";
 import { useRef, useState } from "react";
 import { IoAdd } from "react-icons/io5";
 import Loading from "@/components/Loading";
+import useUploadImage from "@/hooks/useUploadImage";
 
 const CreatePost = () => {
   const [caption, setCaption] = useState("");
-  const [image, setImage] = useState(null);
   const { createPost, isLoading } = useCreatePost();
+  const { image, uploadImage } = useUploadImage();
   const imageRef = useRef(null);
 
   const submitHandler = (e) => {
     e.preventDefault();
     createPost({ caption, image });
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-
-    if (file && file.type.startsWith("image/")) {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-
-      reader.readAsDataURL(file);
-    } else {
-      setImage(null);
-    }
   };
 
   return (
@@ -73,7 +57,7 @@ const CreatePost = () => {
                     hidden
                     type="file"
                     accept="image/*"
-                    onChange={handleImageChange}
+                    onChange={uploadImage}
                   />
                   <button
                     className="bg-blue-500 text-white font-semibold px-5 py-3 rounded-lg hover:bg-blue-600 w-max"
