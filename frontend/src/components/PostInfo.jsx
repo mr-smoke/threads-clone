@@ -17,32 +17,39 @@ import useFollowUser from "@/hooks/useFollowUser";
 import { useEffect, useState } from "react";
 import { Skeleton } from "./ui/skeleton";
 import { formatDistanceToNow } from "date-fns";
+import useUserStore from "@/zustand/useUserStore";
 
 const PostInfo = ({ post }) => {
   const { profile, isLoading } = useGetProfile(post.userId);
   const { user } = useAuth();
   const { deletePost } = useDeletePost();
   const { followUser } = useFollowUser();
-  const [followed, setFollowed] = useState(false);
-  const [followersCount, setFollowersCount] = useState(0);
+  const followed = useUserStore((state) => state.followedUsers[profile._id]);
+  const setFollowed = useUserStore((state) => state.setFollowed);
+  const followersCount = useUserStore(
+    (state) => state.followersCount[profile._id]
+  );
+  const setFollowersCount = useUserStore((state) => state.setFollowersCount);
 
   useEffect(() => {
     if (profile.followers?.includes(user?._id)) {
-      setFollowed(true);
+      setFollowed(profile._id, true);
     } else {
-      setFollowed(false);
+      setFollowed(profile._id, false);
     }
-    setFollowersCount(profile.followers?.length);
-  }, [profile, user]);
+    setFollowersCount(profile._id, profile.followers?.length);
+  }, [profile, user, setFollowed, setFollowersCount]);
 
-  const handleFollow = () => {
+  const handleFollow = async () => {
     if (!user) {
       window.location.href = "/login";
+      return;
     }
     followUser(profile._id);
-    setFollowed((prevFollowed) => !prevFollowed);
-    setFollowersCount((prevCount) =>
-      followed ? prevCount - 1 : prevCount + 1
+    setFollowed(profile._id, !followed);
+    setFollowersCount(
+      profile._id,
+      followed ? followersCount - 1 : followersCount + 1
     );
   };
 
@@ -72,15 +79,17 @@ const PostInfo = ({ post }) => {
             </HoverCardTrigger>
             <HoverCardContent>
               <div className="flex flex-col p-2 gap-2">
-                <div className="flex items-center">
-                  <div className="flex-1">
-                    <p className="font-semibold text-xl">{profile.name}</p>
-                    <p>{profile.username}</p>
+                <a href={`/${profile._id}`}>
+                  <div className="flex items-center">
+                    <div className="flex-1">
+                      <p className="font-semibold text-xl">{profile.name}</p>
+                      <p>{profile.username}</p>
+                    </div>
+                    <Avatar className="w-12 h-12">
+                      <AvatarImage src={profile.img} />
+                    </Avatar>
                   </div>
-                  <Avatar className="w-12 h-12">
-                    <AvatarImage src={profile.img} />
-                  </Avatar>
-                </div>
+                </a>
                 <p>{profile.bio}</p>
                 <p className="text-neutral-500">{followersCount} followers</p>
                 {profile._id !== user?._id && (
