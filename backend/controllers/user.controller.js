@@ -1,4 +1,5 @@
 import User from "../models/user.model.js";
+import Post from "../models/post.model.js";
 import bcrypt from "bcryptjs";
 import tokenization from "../utils/tokenization.js";
 import mongoose from "mongoose";
@@ -152,6 +153,18 @@ export const updateUser = async (req, res) => {
     user.img = img || user.img;
 
     await user.save();
+
+    await Post.updateMany(
+      { "replies.userId": userId },
+      {
+        $set: {
+          "replies.$[reply].username": user.username,
+          "replies.$[reply].img": user.img,
+        },
+      },
+      { arrayFilters: [{ "reply.userId": userId }] }
+    );
+
     return res.status(200).json(user);
   } catch (error) {
     return res.status(500).send(error.message);
