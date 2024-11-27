@@ -5,6 +5,7 @@ import cors from "cors";
 import { connectDB } from "./backend/db/connection.js";
 import userRoutes from "./backend/routes/user.route.js";
 import postRoutes from "./backend/routes/post.route.js";
+import chatRoutes from "./backend/routes/chat.route.js";
 import { v2 as cloudinary } from "cloudinary";
 
 dotenv.config();
@@ -35,6 +36,7 @@ app.use(cookieParser());
 
 app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
+app.use("/api/chat", chatRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
