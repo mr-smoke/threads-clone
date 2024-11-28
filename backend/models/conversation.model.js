@@ -5,6 +5,7 @@ const conversationSchema = new mongoose.Schema(
     userIds: [
       {
         type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
         required: true,
       },
     ],

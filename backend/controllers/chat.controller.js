@@ -3,9 +3,25 @@ import Message from "../models/message.model.js";
 
 export const getConversations = async (req, res) => {
   const userId = req.user._id;
+  console.log(userId);
 
   try {
-    const conversations = await Conversation.find({ userIds: userId });
+    let conversations = await Conversation.find({ userIds: userId }).populate({
+      path: "userIds",
+      select: "username img",
+    });
+
+    conversations = conversations.map((conversation) => {
+      const user = conversation.userIds.find(
+        (user) => user._id.toString() !== userId.toString()
+      );
+      return {
+        _id: conversation._id,
+        profilePic: user.img,
+        name: user.username,
+      };
+    });
+
     res.json(conversations);
   } catch (error) {
     res.status(500).json({ message: error.message });
