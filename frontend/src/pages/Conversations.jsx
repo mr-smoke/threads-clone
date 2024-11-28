@@ -2,7 +2,7 @@ import useGetConversations from "@/hooks/useGetConversations";
 import Loading from "@/components/Loading";
 import { useAuth } from "@/context/AuthContext";
 
-const Chat = () => {
+const Conversations = () => {
   const { conversations, isLoading } = useGetConversations();
 
   console.log(conversations);
@@ -11,7 +11,7 @@ const Chat = () => {
     <div className="flex flex-col">
       {isLoading && <Loading />}
       {!conversations.length && !isLoading && (
-        <p className="text-center text-2xl">No conversation found</p>
+        <p className="text-center text-2xl py-3">No conversation found</p>
       )}
       {!isLoading &&
         conversations.map((conversation) => (
@@ -32,4 +32,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default Conversations;

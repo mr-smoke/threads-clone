@@ -3,7 +3,6 @@ import Message from "../models/message.model.js";
 
 export const getConversations = async (req, res) => {
   const userId = req.user._id;
-  console.log(userId);
 
   try {
     let conversations = await Conversation.find({ userIds: userId }).populate({
@@ -60,9 +59,21 @@ export const sendMessage = async (req, res) => {
 
 export const getMessages = async (req, res) => {
   const conversationId = req.params.conversationId;
+  const userId = req.user._id;
 
   try {
-    const messages = await Message.find({ conversationId }).createdAt("asc");
+    const conversation = await Conversation.findById(conversationId);
+
+    if (!conversation) {
+      return res.status(404).json({ error: "Conversation not found" });
+    }
+
+    if (!conversation.userIds.includes(userId)) {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+
+    const messages = await Message.find({ conversationId });
+
     res.json(messages);
   } catch (error) {
     res.status(500).json({ message: error.message });

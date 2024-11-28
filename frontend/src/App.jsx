@@ -9,7 +9,8 @@ import { Toaster } from "./components/ui/toaster";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import Freeze from "./pages/Freeze";
-import Chat from "./pages/Chat";
+import Conversations from "./pages/Conversations";
+import Messages from "./pages/Messages";
 
 function App() {
   return (
@@ -26,7 +27,8 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/update" element={<UpdateUser />} />
             <Route path="/freeze" element={<Freeze />} />
-            <Route path="/chat" element={<Chat />} />
+            <Route path="/chat" element={<Conversations />} />
+            <Route path="/chat/:id" element={<Messages />} />
           </Routes>
         </div>
       </div>
