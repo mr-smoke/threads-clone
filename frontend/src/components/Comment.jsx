@@ -3,8 +3,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Avatar, AvatarImage } from "./ui/avatar";
 
 const Comment = ({ comment }) => {
-  console.log(comment);
-
   return (
     <div className="flex py-3 px-6 border-t border-neutral-800">
       <Avatar className="w-9 h-9">

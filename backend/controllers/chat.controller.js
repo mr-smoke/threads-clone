@@ -72,7 +72,10 @@ export const getMessages = async (req, res) => {
       return res.status(403).json({ error: "Unauthorized" });
     }
 
-    const messages = await Message.find({ conversationId });
+    const messages = await Message.find({ conversationId }).populate({
+      path: "senderId",
+      select: "username img",
+    });
 
     res.json(messages);
   } catch (error) {
