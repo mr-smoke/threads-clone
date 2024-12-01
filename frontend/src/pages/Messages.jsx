@@ -9,8 +9,8 @@ const Messages = () => {
   const { user } = useAuth();
 
   return (
-    <div className="flex flex-col max-h-screen w-full bg-slate-800 text-white">
-      <div className="p-3 overflow-y-auto flex-1 flex flex-col gap-1 -pb-6">
+    <>
+      <div className="p-3 flex-1 flex flex-col gap-1 mb-3 md:mb-20">
         {isLoading && <Loading />}
         {!messages.length && !isLoading && (
           <div className="text-5xl flex flex-col items-center justify-center h-full gap-12">
@@ -40,7 +40,7 @@ const Messages = () => {
           );
         })}
       </div>
-      <form className="p-4 flex gap-3">
+      <form className="bg-black p-4 flex gap-3 fixed bottom-0 z-10 w-full md:w-[620px]">
         <input
           className="flex-1 p-3 rounded-lg bg-slate-700"
           type="text"
@@ -50,7 +50,7 @@ const Messages = () => {
           <FaPaperPlane className="w-5 h-5" />
         </button>
       </form>
-    </div>
+    </>
   );
 };
 
