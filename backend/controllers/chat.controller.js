@@ -18,6 +18,7 @@ export const getConversations = async (req, res) => {
         _id: conversation._id,
         profilePic: user.img,
         name: user.username,
+        userId: user._id,
       };
     });
 
@@ -46,7 +47,7 @@ export const sendMessage = async (req, res) => {
     const newMessage = new Message({
       conversationId: conversation._id,
       senderId: userId,
-      content: req.body.text,
+      content: req.body.message,
     });
 
     newMessage.save();
@@ -58,21 +59,21 @@ export const sendMessage = async (req, res) => {
 };
 
 export const getMessages = async (req, res) => {
-  const conversationId = req.params.conversationId;
+  const receiverId = req.params.receiverId;
   const userId = req.user._id;
 
   try {
-    const conversation = await Conversation.findById(conversationId);
+    const conversation = await Conversation.findOne({
+      userIds: { $all: [userId, receiverId] },
+    });
 
     if (!conversation) {
       return res.status(404).json({ error: "Conversation not found" });
     }
 
-    if (!conversation.userIds.includes(userId)) {
-      return res.status(403).json({ error: "Unauthorized" });
-    }
-
-    const messages = await Message.find({ conversationId }).populate({
+    const messages = await Message.find({
+      conversationId: conversation._id,
+    }).populate({
       path: "senderId",
       select: "username img",
     });

@@ -2,11 +2,11 @@ import useGetMessages from "@/hooks/useGetMessages";
 import { useAuth } from "@/context/AuthContext";
 import Loading from "@/components/Loading";
 import { FaHandPaper } from "react-icons/fa";
-import { FaPaperPlane } from "react-icons/fa";
+import MessageInput from "@/components/MessageInput";
+import Message from "@/components/Message";
 
 const Messages = () => {
   const { messages, isLoading } = useGetMessages();
-  const { user } = useAuth();
 
   return (
     <>
@@ -19,37 +19,24 @@ const Messages = () => {
           </div>
         )}
         {messages.map((message, index) => {
+          const prevMessage = index > 0 ? messages[index - 1] : null;
+          const isNewDay = prevMessage
+            ? new Date(message.createdAt).toDateString() !==
+              new Date(prevMessage.createdAt).toDateString()
+            : true;
           return (
             <div key={message._id}>
-              <div className={`flex`}>
-                <div className={`flex flex-col gap-1`}>
-                  <div className="flex items-center gap-2">
-                    <img
-                      className={`w-8 h-8 `}
-                      src={message.senderId.img}
-                      alt="Message img"
-                    />
-                    <p className={`p-3 rounded-xl bg-slate-700 w-max`}>
-                      {message.content}
-                    </p>
-                  </div>
-                  <p className="text-xs text-right">{message.createdAt}</p>
+              {isNewDay && (
+                <div className="text-center text-xs text-gray-500 my-2">
+                  {new Date(message.createdAt).toLocaleDateString()}
                 </div>
-              </div>
+              )}
+              <Message message={message} />
             </div>
           );
         })}
       </div>
-      <form className="bg-black p-4 flex gap-3 fixed bottom-0 z-10 w-full md:w-[620px]">
-        <input
-          className="flex-1 p-3 rounded-lg bg-slate-700"
-          type="text"
-          placeholder="Type a message"
-        />
-        <button className="rounded-full bg-slate-700 p-3" type="submit">
-          <FaPaperPlane className="w-5 h-5" />
-        </button>
-      </form>
+      <MessageInput />
     </>
   );
 };
