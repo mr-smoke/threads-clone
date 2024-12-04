@@ -7,10 +7,10 @@ import userRoutes from "./backend/routes/user.route.js";
 import postRoutes from "./backend/routes/post.route.js";
 import chatRoutes from "./backend/routes/chat.route.js";
 import { v2 as cloudinary } from "cloudinary";
+import { app, server } from "./backend/socket/socket.js";
 
 dotenv.config();
 connectDB();
-const app = express();
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -38,6 +38,6 @@ app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/chat", chatRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
