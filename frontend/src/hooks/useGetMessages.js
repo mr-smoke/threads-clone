@@ -1,12 +1,25 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { useSocket } from "@/context/SocketContext";
+import useMessageStore from "@/zustand/useMessageStore";
 
 const useGetMessages = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [messages, setMessages] = useState([]);
   const { toast } = useToast();
   const { id } = useParams();
+  const { socket } = useSocket();
+  const { messages, setMessages } = useMessageStore();
+
+  useEffect(() => {
+    socket?.on("newMessage", (message) => {
+      setMessages([...messages, newMessage]);
+    });
+
+    return () => {
+      socket?.off("newMessage");
+    };
+  }, [socket, messages, setMessages]);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -33,7 +46,7 @@ const useGetMessages = () => {
     };
 
     fetchMessages();
-  }, []);
+  }, [setMessages]);
 
   return { messages, isLoading };
 };
