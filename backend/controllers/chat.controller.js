@@ -45,13 +45,18 @@ export const sendMessage = async (req, res) => {
       await conversation.save();
     }
 
-    const newMessage = new Message({
+    let newMessage = new Message({
       conversationId: conversation._id,
       senderId: userId,
       content: req.body.message,
     });
 
     newMessage.save();
+
+    newMessage = await newMessage.populate({
+      path: "senderId",
+      select: "username img",
+    });
 
     const receiverSocket = getReceiverSocketId(receiverId);
     if (receiverSocket) {

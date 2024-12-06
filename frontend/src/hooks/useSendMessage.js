@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import useMessageStore from "@/zustand/useMessageStore";
 
 const useSendMessage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const { id } = useParams();
+  const { messages, setMessages } = useMessageStore();
 
   const sendMessage = async (message) => {
     try {
@@ -27,6 +29,8 @@ const useSendMessage = () => {
         toast({
           description: data.error,
         });
+      } else {
+        setMessages([...messages, data]);
       }
     } catch (error) {
       toast({

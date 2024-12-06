@@ -13,7 +13,7 @@ const useGetMessages = () => {
 
   useEffect(() => {
     socket?.on("newMessage", (message) => {
-      setMessages([...messages, newMessage]);
+      setMessages([...messages, message]);
     });
 
     return () => {
