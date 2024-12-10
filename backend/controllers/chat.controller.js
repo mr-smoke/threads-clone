@@ -34,6 +34,10 @@ export const sendMessage = async (req, res) => {
   const receiverId = req.params.receiverId;
 
   try {
+    if (userId.toString() === receiverId.toString()) {
+      return res.status(400).json({ error: "You cannot message yourself" });
+    }
+
     let conversation = await Conversation.findOne({
       userIds: { $all: [userId, receiverId] },
     });
@@ -74,6 +78,10 @@ export const getMessages = async (req, res) => {
   const userId = req.user._id;
 
   try {
+    if (userId.toString() === receiverId.toString()) {
+      return res.status(400).json({ error: "You cannot message yourself" });
+    }
+
     const conversation = await Conversation.findOne({
       userIds: { $all: [userId, receiverId] },
     });

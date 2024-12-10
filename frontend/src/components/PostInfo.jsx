@@ -17,41 +17,12 @@ import useFollowUser from "@/hooks/useFollowUser";
 import { useEffect, useState } from "react";
 import { Skeleton } from "./ui/skeleton";
 import { formatDistanceToNow } from "date-fns";
-import useUserStore from "@/zustand/useUserStore";
 
 const PostInfo = ({ post }) => {
   const { profile, isLoading } = useGetProfile(post.userId);
   const { user } = useAuth();
   const { deletePost } = useDeletePost();
-  const { followUser } = useFollowUser();
-  const followed = useUserStore((state) => state.followedUsers[profile._id]);
-  const setFollowed = useUserStore((state) => state.setFollowed);
-  const followersCount = useUserStore(
-    (state) => state.followersCount[profile._id]
-  );
-  const setFollowersCount = useUserStore((state) => state.setFollowersCount);
-
-  useEffect(() => {
-    if (profile.followers?.includes(user?._id)) {
-      setFollowed(profile._id, true);
-    } else {
-      setFollowed(profile._id, false);
-    }
-    setFollowersCount(profile._id, profile.followers?.length);
-  }, [profile, user, setFollowed, setFollowersCount]);
-
-  const handleFollow = async () => {
-    if (!user) {
-      window.location.href = "/login";
-      return;
-    }
-    followUser(profile._id);
-    setFollowed(profile._id, !followed);
-    setFollowersCount(
-      profile._id,
-      followed ? followersCount - 1 : followersCount + 1
-    );
-  };
+  const { followed, followersCount, handleFollow } = useFollowUser(profile);
 
   if (isLoading) {
     return (

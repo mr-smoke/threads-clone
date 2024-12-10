@@ -12,6 +12,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import Loading from "./Loading";
+import useFollowUser from "@/hooks/useFollowUser";
 
 const ProfileInfo = () => {
   const { id } = useParams();
@@ -19,6 +20,7 @@ const ProfileInfo = () => {
   const { user } = useAuth();
   const { toast } = useToast();
   const isOwner = profile._id === user?._id;
+  const { followed, followersCount, handleFollow } = useFollowUser(profile);
 
   const copyLink = () => {
     navigator.clipboard.writeText(`http://localhost:5173/${id}`);
@@ -50,7 +52,7 @@ const ProfileInfo = () => {
       <p className="mt-4">{profile.bio}</p>
       <div className="flex justify-between items-center mt-3">
         <div className="flex text-neutral-500">
-          <p className="mr-2">{profile.followers?.length} Followers</p>
+          <p className="mr-2">{followersCount} Followers</p>
         </div>
         <div className="flex items-center">
           <a
@@ -90,6 +92,21 @@ const ProfileInfo = () => {
           </Popover>
         </div>
       </div>
+      {!isOwner && (
+        <div className="flex gap-3 mt-3">
+          <button
+            className="w-full text-center py-2 font-semibold rounded-lg bg-neutral-800 hover:bg-neutral-700"
+            onClick={handleFollow}
+          >
+            {followed ? "Unfollow" : "Follow"}
+          </button>
+          <a href={`/chat/${id}`} className="w-full">
+            <button className="w-full text-center py-2 font-semibold rounded-lg bg-neutral-800 hover:bg-neutral-700">
+              Message
+            </button>
+          </a>
+        </div>
+      )}
     </>
   );
 };
