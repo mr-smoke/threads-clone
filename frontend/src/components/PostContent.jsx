@@ -25,6 +25,7 @@ const PostContent = ({ post }) => {
             </DialogTrigger>
             <DialogContent className="max-w-max">
               <DialogHeader>
+                <DialogTitle></DialogTitle>
                 <DialogDescription>
                   <img
                     src={post.img[0]}

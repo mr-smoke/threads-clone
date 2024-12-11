@@ -13,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import Loading from "./Loading";
 import useFollowUser from "@/hooks/useFollowUser";
+import Button from "./button";
 
 const ProfileInfo = () => {
   const { id } = useParams();
@@ -70,23 +71,14 @@ const ProfileInfo = () => {
               {isOwner ? (
                 <>
                   <a href="/freeze">
-                    <button className="flex justify-between items-center w-full px-4 py-2 font-semibold rounded-lg hover:bg-neutral-800">
-                      Freeze Account
-                    </button>
+                    <Button>Freeze Account</Button>
                   </a>
                   <a href="/update">
-                    <button className="flex justify-between items-center w-full px-4 py-2 font-semibold rounded-lg hover:bg-neutral-800">
-                      Update Profile
-                    </button>
+                    <Button>Update Profile</Button>
                   </a>
                 </>
               ) : (
-                <button
-                  className="flex justify-between items-center w-full px-4 py-2 font-semibold rounded-lg hover:bg-neutral-800"
-                  onClick={copyLink}
-                >
-                  Copy Profile URL
-                </button>
+                <Button onClick={copyLink}>Copy Profile URL</Button>
               )}
             </PopoverContent>
           </Popover>

@@ -17,6 +17,7 @@ import useFollowUser from "@/hooks/useFollowUser";
 import { useEffect, useState } from "react";
 import { Skeleton } from "./ui/skeleton";
 import { formatDistanceToNow } from "date-fns";
+import Button from "./button";
 
 const PostInfo = ({ post }) => {
   const { profile, isLoading } = useGetProfile(post.userId);
@@ -86,18 +87,18 @@ const PostInfo = ({ post }) => {
           </PopoverTrigger>
           <PopoverContent className="p-2 rounded-xl bg-neutral-900 text-white border-neutral-800 items-end">
             {post.userId === user?._id ? (
-              <button
-                className="flex justify-between items-center w-full px-4 py-2 font-semibold text-red-600 rounded-lg hover:bg-neutral-800"
+              <Button
                 onClick={() => deletePost(post._id)}
+                className="text-red-600"
               >
                 Delete
                 <FaTrash />
-              </button>
+              </Button>
             ) : (
-              <button className="flex justify-between items-center w-full px-4 py-2 font-semibold text-red-600 rounded-lg hover:bg-neutral-800">
+              <Button className="text-red-600">
                 Report
                 <FaExclamationTriangle />
-              </button>
+              </Button>
             )}
           </PopoverContent>
         </Popover>

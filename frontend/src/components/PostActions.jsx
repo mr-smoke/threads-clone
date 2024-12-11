@@ -14,6 +14,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
+import Button from "./button";
 
 const PostActions = ({ post }) => {
   const { user } = useAuth();
@@ -73,13 +74,10 @@ const PostActions = ({ post }) => {
           align="start"
           className="p-2 rounded-xl bg-neutral-900 text-white border-neutral-800"
         >
-          <button
-            className="flex justify-between items-center w-full px-4 py-2 font-semibold  rounded-lg hover:bg-neutral-800"
-            onClick={copyLink}
-          >
+          <Button onClick={copyLink}>
             Copy Post Link
             <FaCopy />
-          </button>
+          </Button>
         </PopoverContent>
       </Popover>
     </div>
