@@ -4,8 +4,8 @@ import {
   IoHomeOutline,
   IoPerson,
   IoPersonOutline,
-  IoSearch,
-  IoSearchOutline,
+  IoChatbubbleEllipses,
+  IoChatbubbleEllipsesOutline,
 } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import CreatePost from "./CreatePost";
@@ -31,13 +31,13 @@ const Sidebar = () => {
           )}
         </a>
         <a
-          href="/search"
+          href="/chat"
           className="w-14 h-14 flex items-center justify-center hover:bg-[#171717] rounded-lg"
         >
-          {active === "/search" ? (
-            <IoSearch className="text-white w-7 h-7" />
+          {active === "/chat" ? (
+            <IoChatbubbleEllipses className="text-white w-7 h-7" />
           ) : (
-            <IoSearchOutline className="text-[#565656] w-7 h-7" />
+            <IoChatbubbleEllipsesOutline className="text-[#565656] w-7 h-7" />
           )}
         </a>
         <a

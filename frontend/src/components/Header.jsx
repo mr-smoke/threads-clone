@@ -11,7 +11,7 @@ const Header = () => {
       <div className="absolute flex justify-center md:left-4">
         <a href="/" className="flex justify-center">
           <img
-            src="/light-logo.svg"
+            src="/logo.svg"
             alt="logo"
             className="w-9 h-9 my-4 hover:scale-110 transition-transform"
           />

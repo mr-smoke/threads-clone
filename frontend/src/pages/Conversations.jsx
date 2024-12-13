@@ -1,11 +1,11 @@
 import useGetConversations from "@/hooks/useGetConversations";
 import Loading from "@/components/Loading";
 import { useAuth } from "@/context/AuthContext";
+import { useSocket } from "@/context/SocketContext";
 
 const Conversations = () => {
   const { conversations, isLoading } = useGetConversations();
-
-  console.log(conversations);
+  const { onlineUsers } = useSocket();
 
   return (
     <div className="flex flex-col">
@@ -15,18 +15,29 @@ const Conversations = () => {
       )}
       {!isLoading &&
         conversations.map((conversation) => (
-          <div
-            className={`relative min-w-max flex items-center gap-3 p-3 rounded-lg cursor-pointer hover:bg-neutral-700 hover:opacity-70 
-          `}
-            key={conversation._id}
-          >
-            <img
-              src={conversation.profilePic}
-              alt={conversation.name}
-              className="w-10 h-10 rounded-full"
-            />
-            <span className="font-semibold truncate">{conversation.name}</span>
-          </div>
+          <a href={`/chat/${conversation.userId}`} key={conversation._id}>
+            <div
+              className={`relative min-w-max flex items-center gap-3 p-3 rounded-lg cursor-pointer hover:bg-neutral-700 hover:opacity-70`}
+            >
+              <img
+                src={conversation.profilePic}
+                alt={conversation.name}
+                className="w-10 h-10 rounded-full"
+              />
+              <span className="font-semibold truncate">
+                {conversation.name}
+              </span>
+              {onlineUsers.includes(conversation.userId) ? (
+                <div className="absolute right-3 text-green-500 font-semibold">
+                  Online
+                </div>
+              ) : (
+                <div className="absolute right-3 text-red-500 font-semibold">
+                  Offline
+                </div>
+              )}
+            </div>
+          </a>
         ))}
     </div>
   );
