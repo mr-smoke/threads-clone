@@ -14,13 +14,14 @@ const useLogout = () => {
 
       toast({
         description: "Logged out successfully",
+        variant: "success",
       });
       setUser(null);
     } catch (error) {
       toast({
         description: error.message,
+        variant: "unsuccess",
       });
-      console.error(error);
     }
   };
 

@@ -22,13 +22,14 @@ const useGetProfile = (id) => {
         if (data.error) {
           toast({
             description: data.error,
+            variant: "unsuccess",
           });
         }
       } catch (error) {
         toast({
           description: error.message,
+          variant: "unsuccess",
         });
-        console.error(error);
       } finally {
         setIsLoading(false);
       }

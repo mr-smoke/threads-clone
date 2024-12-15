@@ -24,19 +24,21 @@ const useCommentPost = () => {
       if (data.error) {
         toast({
           description: data.error,
+          variant: "unsuccess",
         });
         return false;
       } else {
         toast({
           description: "Comment added",
+          variant: "success",
         });
         return true;
       }
     } catch (error) {
       toast({
         description: error.message,
+        variant: "unsuccess",
       });
-      console.error(error);
       return false;
     } finally {
       setIsLoading(false);

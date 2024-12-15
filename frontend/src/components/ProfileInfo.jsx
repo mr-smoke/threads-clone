@@ -27,6 +27,7 @@ const ProfileInfo = () => {
     navigator.clipboard.writeText(`http://localhost:5173/${id}`);
     toast({
       description: "Copied to clipboard",
+      variant: "success",
     });
   };
 

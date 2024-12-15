@@ -24,8 +24,8 @@ const useGetUserPosts = () => {
       } catch (error) {
         toast({
           description: error.message,
+          variant: "unsuccess",
         });
-        console.error(error);
       } finally {
         setIsLoading(false);
       }

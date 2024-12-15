@@ -42,6 +42,7 @@ const PostActions = ({ post }) => {
     navigator.clipboard.writeText(`http://localhost:5173/post/${post._id}`);
     toast({
       description: "Copied to clipboard",
+      variant: "success",
     });
   };
 

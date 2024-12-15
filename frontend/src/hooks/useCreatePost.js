@@ -21,18 +21,20 @@ const useCreatePost = () => {
       if (data.error) {
         toast({
           description: data.error,
+          variant: "unsuccess",
         });
       } else {
         toast({
           description: "Post created successfully",
+          variant: "success",
         });
         window.location.href = "/";
       }
     } catch (error) {
       toast({
         description: error.message,
+        variant: "unsuccess",
       });
-      console.error(error);
     } finally {
       setIsLoading(false);
     }

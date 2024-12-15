@@ -34,12 +34,16 @@ const useGetMessages = () => {
         if (data.error) {
           toast({
             description: data.error,
+            variant: "unsuccess",
           });
         } else {
           setMessages(data);
         }
       } catch (error) {
-        console.error(error);
+        toast({
+          description: error.message,
+          variant: "unsuccess",
+        });
       } finally {
         setIsLoading(false);
       }

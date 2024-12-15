@@ -20,17 +20,19 @@ const useDeletePost = () => {
       if (data.error) {
         toast({
           description: data.error,
+          variant: "unsuccess",
         });
       } else {
         toast({
           description: "Post deleted successfully",
+          variant: "success",
         });
       }
     } catch (error) {
       toast({
         description: error.message,
+        variant: "unsuccess",
       });
-      console.error(error);
     } finally {
       setIsLoading(false);
     }

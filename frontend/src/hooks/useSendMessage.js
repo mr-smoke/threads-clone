@@ -28,6 +28,7 @@ const useSendMessage = () => {
       if (data.error) {
         toast({
           description: data.error,
+          variant: "unsuccess",
         });
       } else {
         setMessages([...messages, data]);
@@ -35,8 +36,8 @@ const useSendMessage = () => {
     } catch (error) {
       toast({
         description: error.message,
+        variant: "unsuccess",
       });
-      console.error(error);
     } finally {
       setIsLoading(false);
     }

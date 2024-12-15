@@ -26,10 +26,12 @@ const useUpdateUser = () => {
       if (data.error) {
         toast({
           description: data.error,
+          variant: "unsuccess",
         });
       } else {
         toast({
           description: "Profile updated successfully",
+          variant: "success",
         });
         setUser(data);
         window.location.reload();
@@ -37,8 +39,8 @@ const useUpdateUser = () => {
     } catch (error) {
       toast({
         description: error.message,
+        variant: "unsuccess",
       });
-      console.error(error);
     } finally {
       setIsLoading(false);
     }

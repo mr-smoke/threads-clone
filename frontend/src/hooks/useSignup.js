@@ -23,10 +23,12 @@ const useSignup = () => {
       if (data.error) {
         toast({
           description: data.error,
+          variant: "unsuccess",
         });
       } else {
         toast({
           description: "Signed up successfully",
+          variant: "success",
         });
         window.location.href = "/";
         setUser(data);
@@ -34,8 +36,8 @@ const useSignup = () => {
     } catch (error) {
       toast({
         description: error.message,
+        variant: "unsuccess",
       });
-      console.error(error);
     } finally {
       setIsLoading(false);
     }

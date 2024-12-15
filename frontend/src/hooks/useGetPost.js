@@ -21,6 +21,7 @@ const useGetPost = () => {
         if (data.error) {
           toast({
             description: data.error,
+            variant: "unsuccess",
           });
         } else {
           setPost(data);
@@ -28,8 +29,8 @@ const useGetPost = () => {
       } catch (error) {
         toast({
           description: error.message,
+          variant: "unsuccess",
         });
-        console.error(error);
       } finally {
         setIsLoading(false);
       }

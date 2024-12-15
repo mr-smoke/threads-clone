@@ -17,14 +17,15 @@ const useFreeze = () => {
 
       toast({
         description: "Your account has been frozen.",
+        variant: "success",
       });
       window.location.href = "/";
       setUser(null);
     } catch (error) {
       toast({
         description: error.message,
+        variant: "unsuccess",
       });
-      console.error(error);
     } finally {
       setIsLoading(false);
     }
