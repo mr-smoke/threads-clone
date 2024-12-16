@@ -15,12 +15,12 @@ import useUploadImage from "@/hooks/useUploadImage";
 const CreatePost = () => {
   const [caption, setCaption] = useState("");
   const { createPost, isLoading } = useCreatePost();
-  const { image, uploadImage } = useUploadImage();
+  const { images, uploadImage } = useUploadImage();
   const imageRef = useRef(null);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    createPost({ caption, image });
+    createPost({ caption, images });
   };
 
   return (
@@ -56,6 +56,7 @@ const CreatePost = () => {
                     ref={imageRef}
                     hidden
                     type="file"
+                    multiple
                     accept="image/*"
                     onChange={uploadImage}
                   />

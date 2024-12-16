@@ -11,8 +11,15 @@ import Header from "./components/Header";
 import Freeze from "./pages/Freeze";
 import Conversations from "./pages/Conversations";
 import Messages from "./pages/Messages";
+import { useAuth } from "./context/AuthContext";
 
 function App() {
+  const { user, isLoading } = useAuth();
+
+  if (isLoading) {
+    return null;
+  }
+
   return (
     <>
       <div className="bg-black text-white min-h-screen flex justify-center">
@@ -23,12 +30,15 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/:id" element={<Profile />} />
             <Route path="/post/:id" element={<SinglePost />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/update" element={<UpdateUser />} />
-            <Route path="/freeze" element={<Freeze />} />
-            <Route path="/chat" element={<Conversations />} />
-            <Route path="/chat/:id" element={<Messages />} />
+            <Route path="/login" element={user ? <Home /> : <Login />} />
+            <Route path="/signup" element={user ? <Home /> : <Signup />} />
+            <Route path="/update" element={user ? <UpdateUser /> : <Login />} />
+            <Route path="/freeze" element={user ? <Freeze /> : <Login />} />
+            <Route
+              path="/chat"
+              element={user ? <Conversations /> : <Login />}
+            />
+            <Route path="/chat/:id" element={user ? <Messages /> : <Login />} />
           </Routes>
         </div>
       </div>

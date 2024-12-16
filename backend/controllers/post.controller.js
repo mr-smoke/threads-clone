@@ -15,16 +15,19 @@ export const createPost = async (req, res) => {
   const userId = req.user._id;
 
   try {
-    const { caption, image } = req.body;
+    const { caption, images } = req.body;
     let img = [];
 
-    if (!caption && !image) {
+    if (!caption && images.length === 0) {
       return res.status(400).json({ error: "Caption or image is required" });
     }
 
-    if (image) {
-      const uploadedResponse = await cloudinary.uploader.upload(image);
-      img = uploadedResponse.secure_url;
+    if (images && images.length > 0) {
+      const uploadPromises = images.map((image) =>
+        cloudinary.uploader.upload(image)
+      );
+      const uploadedResponses = await Promise.all(uploadPromises);
+      img = uploadedResponses.map((response) => response.secure_url);
     }
 
     const newPost = new Post({ caption, img, userId });

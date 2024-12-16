@@ -1,25 +1,41 @@
 import { useState } from "react";
+import { useToast } from "./use-toast";
 
 const useUploadImage = () => {
-  const [image, setImage] = useState(null);
+  const [images, setImages] = useState([]);
+  const { toast } = useToast();
 
   const uploadImage = (e) => {
-    const file = e.target.files[0];
+    const files = Array.from(e.target.files);
 
-    if (file && file.type.startsWith("image/")) {
-      const reader = new FileReader();
+    const validImages = files.filter((file) => file.type.startsWith("image/"));
 
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
+    const readers = validImages.map((file) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    });
 
-      reader.readAsDataURL(file);
-    } else {
-      setImage(null);
-    }
+    Promise.all(readers)
+      .then((results) => {
+        setImages((prevImages) => [...prevImages, ...results]);
+        toast({
+          description: "Images uploaded successfully",
+          variant: "success",
+        });
+      })
+      .catch((error) => {
+        toast({
+          description: "Error uploading images",
+          variant: "unsuccess",
+        });
+      });
   };
 
-  return { image, uploadImage };
+  return { images, uploadImage };
 };
 
 export default useUploadImage;
