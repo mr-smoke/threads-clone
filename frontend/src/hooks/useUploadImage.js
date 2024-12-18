@@ -4,11 +4,22 @@ import { useToast } from "./use-toast";
 const useUploadImage = () => {
   const [images, setImages] = useState([]);
   const { toast } = useToast();
+  const MAX_SIZE = 1024 * 1024;
 
   const uploadImage = (e) => {
     const files = Array.from(e.target.files);
 
-    const validImages = files.filter((file) => file.type.startsWith("image/"));
+    const validImages = files.filter((file) => {
+      if (!file.type.startsWith("image/")) {
+        toast({ description: "Invalid file type", variant: "unsuccess" });
+        return false;
+      }
+      if (file.size > MAX_SIZE) {
+        toast({ description: "File size exceeds 5MB", variant: "unsuccess" });
+        return false;
+      }
+      return true;
+    });
 
     const readers = validImages.map((file) => {
       return new Promise((resolve, reject) => {
@@ -22,10 +33,6 @@ const useUploadImage = () => {
     Promise.all(readers)
       .then((results) => {
         setImages((prevImages) => [...prevImages, ...results]);
-        toast({
-          description: "Images uploaded successfully",
-          variant: "success",
-        });
       })
       .catch((error) => {
         toast({
@@ -35,7 +42,7 @@ const useUploadImage = () => {
       });
   };
 
-  return { images, uploadImage };
+  return { images, setImages, uploadImage };
 };
 
 export default useUploadImage;

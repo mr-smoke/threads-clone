@@ -15,7 +15,7 @@ import useUploadImage from "@/hooks/useUploadImage";
 const CreatePost = () => {
   const [caption, setCaption] = useState("");
   const { createPost, isLoading } = useCreatePost();
-  const { images, uploadImage } = useUploadImage();
+  const { images, setImages, uploadImage } = useUploadImage();
   const imageRef = useRef(null);
 
   const submitHandler = (e) => {
@@ -24,7 +24,12 @@ const CreatePost = () => {
   };
 
   return (
-    <Dialog>
+    <Dialog
+      onOpenChange={() => {
+        setCaption("");
+        setImages([]);
+      }}
+    >
       <DialogTrigger>
         <div className="w-14 h-14 flex items-center justify-center hover:bg-[#171717] rounded-lg">
           <IoAdd className="text-[#565656] w-7 h-7" />
@@ -50,7 +55,9 @@ const CreatePost = () => {
                     type="button"
                     onClick={() => imageRef.current.click()}
                   >
-                    Add Image
+                    {images.length > 0
+                      ? `Add ${images.length} more image(s)`
+                      : "Add image"}
                   </button>
                   <input
                     ref={imageRef}
