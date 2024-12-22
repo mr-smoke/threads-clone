@@ -7,25 +7,33 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import useCommentPost from "@/hooks/useCommentPost";
+import useCreateComment from "@/hooks/useCreateComment";
+import useUploadImage from "@/hooks/useUploadImage";
+import Loading from "@/components/Loading";
 import { useRef, useState } from "react";
 
 const CreateComment = ({ postId, setCommentsCount }) => {
-  const [comment, setComment] = useState("");
-  const { commentPost } = useCommentPost();
+  const [text, setText] = useState("");
+  const { commentPost, isLoading } = useCreateComment();
+  const { images, setImages, uploadImage } = useUploadImage();
   const imageRef = useRef(null);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const res = await commentPost({ comment }, postId);
+    const res = await commentPost({ text, images }, postId);
     if (res) {
-      setComment("");
+      setText("");
       setCommentsCount((prevCount) => prevCount + 1);
     }
   };
 
   return (
-    <Dialog>
+    <Dialog
+      onOpenChange={() => {
+        setText("");
+        setImages([]);
+      }}
+    >
       <DialogTrigger>
         <svg
           fill="#ffffff"
@@ -49,22 +57,30 @@ const CreateComment = ({ postId, setCommentsCount }) => {
                   className="border rounded-lg p-2 text-base text-black"
                   placeholder="Post content"
                   maxLength={100}
-                  onChange={(e) => setComment(e.target.value)}
+                  onChange={(e) => setText(e.target.value)}
                 />
                 <div className="flex justify-between">
                   <button
                     className="bg-neutral-700 text-white font-semibold px-5 py-3 rounded-lg hover:bg-neutral-800 w-max"
+                    type="button"
                     onClick={() => imageRef.current.click()}
                   >
-                    Add Image
+                    {images.length > 0 ? "Image added" : "Add image"}
                   </button>
-                  <input ref={imageRef} hidden type="file" />
+                  <input
+                    ref={imageRef}
+                    hidden
+                    type="file"
+                    accept="image/*"
+                    onChange={uploadImage}
+                  />
                   <DialogClose asChild>
                     <button
                       className="bg-blue-500 text-white font-semibold px-5 py-3 rounded-lg hover:bg-blue-600 w-max"
                       type="submit"
+                      disabled={isLoading}
                     >
-                      Comment
+                      {isLoading ? <Loading /> : "Post"}
                     </button>
                   </DialogClose>
                 </div>

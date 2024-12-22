@@ -21,34 +21,26 @@ const postSchema = new mongoose.Schema(
           ref: "User",
           required: true,
         },
-        comment: {
+        text: {
           type: String,
-          required: true,
           maxLength: 250,
         },
         img: {
-          type: String,
+          type: [String],
         },
         username: {
           type: String,
         },
-      },
-    ],
-    likes: [
-      {
-        userId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-          required: true,
-        },
-        img: {
-          type: String,
-        },
-        username: {
+        avatar: {
           type: String,
         },
       },
     ],
+    likes: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "User",
+      default: [],
+    },
   },
   { timestamps: true }
 );

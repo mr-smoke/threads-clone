@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
-const useCommentPost = () => {
+const useCreateComment = () => {
   const [isLoading, setIsLoading] = useState();
   const { toast } = useToast();
 
@@ -35,6 +35,7 @@ const useCommentPost = () => {
         return true;
       }
     } catch (error) {
+      console.error(error);
       toast({
         description: error.message,
         variant: "unsuccess",
@@ -48,4 +49,4 @@ const useCommentPost = () => {
   return { commentPost, isLoading };
 };
 
-export default useCommentPost;
+export default useCreateComment;

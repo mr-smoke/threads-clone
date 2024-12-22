@@ -40,6 +40,7 @@ export const createPost = async (req, res) => {
 
 export const getPost = async (req, res) => {
   const { id } = req.params;
+
   try {
     const post = await Post.findOne({ _id: id }).exec();
 
@@ -89,7 +90,7 @@ export const deletePost = async (req, res) => {
 
 export const likePost = async (req, res) => {
   const { id } = req.params;
-  const { img, username, id: userId } = req.user;
+  const { id: userId } = req.user;
 
   try {
     const post = await Post.findOne({ _id: id }).exec();
@@ -98,17 +99,13 @@ export const likePost = async (req, res) => {
       return res.status(404).json({ error: "Post not found" });
     }
 
-    const isLiked = post.likes.find(
-      (like) => like.userId.toString() === userId.toString()
-    );
+    const isLiked = post.likes.includes(userId);
     if (isLiked) {
-      post.likes = post.likes.filter(
-        (like) => like.userId.toString() !== userId.toString()
-      );
+      post.likes = post.likes.filter((id) => id.toString() !== userId);
       await post.save();
       return res.status(200).json({ message: "Unliked" });
     } else {
-      post.likes.push({ userId, img, username });
+      post.likes.push(userId);
       await post.save();
       return res.status(200).json({ message: "Liked" });
     }
@@ -119,13 +116,14 @@ export const likePost = async (req, res) => {
 
 export const commentPost = async (req, res) => {
   const { id } = req.params;
-  const { img, username, id: userId } = req.user;
+  const { img: avatar, username, id: userId } = req.user;
 
   try {
-    const { comment } = req.body;
+    const { text, images } = req.body;
+    let img = [];
 
-    if (!comment) {
-      return res.status(400).json({ error: "Comment is required" });
+    if (!text && images.length === 0) {
+      return res.status(400).json({ error: "Comment or image is required" });
     }
 
     const post = await Post.findOne({ _id: id }).exec();
@@ -134,7 +132,15 @@ export const commentPost = async (req, res) => {
       return res.status(404).json({ error: "Post not found" });
     }
 
-    post.comments.push({ userId, comment, img, username });
+    if (images && images.length > 0) {
+      const uploadPromises = images.map((image) =>
+        cloudinary.uploader.upload(image)
+      );
+      const uploadedResponses = await Promise.all(uploadPromises);
+      img = uploadedResponses.map((response) => response.secure_url);
+    }
+
+    post.comments.push({ userId, text, img, username, avatar });
     await post.save();
     return res.status(200).json("Comment added");
   } catch (error) {
@@ -144,6 +150,7 @@ export const commentPost = async (req, res) => {
 
 export const getPersonalFeed = async (req, res) => {
   const userId = req.user._id;
+
   try {
     const user = await User.findById(userId).exec();
 

@@ -8,8 +8,6 @@ import Loading from "@/components/Loading";
 const SinglePost = () => {
   const { post, isLoading } = useGetPost();
 
-  console.log(post);
-
   if (isLoading) {
     return <Loading />;
   }

@@ -25,7 +25,9 @@ const PostActions = ({ post }) => {
   const { toast } = useToast();
 
   useEffect(() => {
-    setLiked(post.likes.some((like) => like.userId === user?._id));
+    if (user && post.likes.includes(user._id)) {
+      setLiked(true);
+    }
   }, [user, post.likes]);
 
   const handleLike = () => {
