@@ -7,7 +7,7 @@ const postSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    caption: {
+    text: {
       type: String,
       maxLength: 250,
     },

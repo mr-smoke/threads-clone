@@ -49,8 +49,8 @@ const PostActions = ({ post }) => {
   };
 
   return (
-    <div className="flex items-center gap-6 mt-3 text-sm">
-      <div className="flex items-center  gap-1.5">
+    <div className="flex items-center gap-6 text-sm">
+      <div className="flex items-center gap-1.5">
         <button onClick={handleLike}>
           <svg width="20" height="20" viewBox="0 0 24 24">
             <g transform="translate(0 -1028.4)">

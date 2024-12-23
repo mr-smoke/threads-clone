@@ -13,20 +13,20 @@ import Loading from "@/components/Loading";
 import useUploadImage from "@/hooks/useUploadImage";
 
 const CreatePost = () => {
-  const [caption, setCaption] = useState("");
+  const [text, setText] = useState("");
   const { createPost, isLoading } = useCreatePost();
   const { images, setImages, uploadImage } = useUploadImage();
   const imageRef = useRef(null);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    createPost({ caption, images });
+    createPost({ text, images });
   };
 
   return (
     <Dialog
       onOpenChange={() => {
-        setCaption("");
+        setText("");
         setImages([]);
       }}
     >
@@ -47,7 +47,7 @@ const CreatePost = () => {
                   className="border rounded-lg p-2 text-base text-black"
                   placeholder="Post content"
                   maxLength={100}
-                  onChange={(e) => setCaption(e.target.value)}
+                  onChange={(e) => setText(e.target.value)}
                 />
                 <div className="flex justify-between">
                   <button

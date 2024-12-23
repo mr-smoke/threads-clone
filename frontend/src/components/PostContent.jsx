@@ -11,9 +11,9 @@ const PostContent = ({ post }) => {
   return (
     <div className="flex flex-col">
       <a href={`/post/${post._id}`}>
-        <p>{post.caption}</p>
+        <p>{post.text}</p>
       </a>
-      <div className="flex pt-1">
+      <div className="flex pb-2">
         {post.img.length === 1 ? (
           <Dialog>
             <DialogTrigger>

@@ -41,7 +41,7 @@ const PostInfo = ({ post }) => {
           <AvatarImage src={profile.img} />
         </Avatar>
       </a>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center pb-1">
         <div className="flex items-center">
           <HoverCard>
             <HoverCardTrigger>

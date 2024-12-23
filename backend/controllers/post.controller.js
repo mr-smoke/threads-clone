@@ -15,11 +15,11 @@ export const createPost = async (req, res) => {
   const userId = req.user._id;
 
   try {
-    const { caption, images } = req.body;
+    const { text, images } = req.body;
     let img = [];
 
-    if (!caption && images.length === 0) {
-      return res.status(400).json({ error: "Caption or image is required" });
+    if (!text && images.length === 0) {
+      return res.status(400).json({ error: "Text or image is required" });
     }
 
     if (images && images.length > 0) {
@@ -30,7 +30,7 @@ export const createPost = async (req, res) => {
       img = uploadedResponses.map((response) => response.secure_url);
     }
 
-    const newPost = new Post({ caption, img, userId });
+    const newPost = new Post({ text, img, userId });
     await newPost.save();
     return res.status(201).json(newPost);
   } catch (error) {
