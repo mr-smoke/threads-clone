@@ -1,6 +1,7 @@
 import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
 import { getReceiverSocketId, io } from "../socket/socket.js";
+import { v2 as cloudinary } from "cloudinary";
 
 export const getConversations = async (req, res) => {
   const userId = req.user._id;
@@ -34,8 +35,15 @@ export const sendMessage = async (req, res) => {
   const receiverId = req.params.receiverId;
 
   try {
+    const { text, images } = req.body;
+    let img = [];
+
     if (userId.toString() === receiverId.toString()) {
       return res.status(400).json({ error: "You cannot message yourself" });
+    }
+
+    if (!text && images.length === 0) {
+      return res.status(400).json({ error: "Text or image is required" });
     }
 
     let conversation = await Conversation.findOne({
@@ -49,10 +57,19 @@ export const sendMessage = async (req, res) => {
       await conversation.save();
     }
 
+    if (images && images.length > 0) {
+      const uploadPromises = images.map((image) =>
+        cloudinary.uploader.upload(image)
+      );
+      const uploadedResponses = await Promise.all(uploadPromises);
+      img = uploadedResponses.map((response) => response.secure_url);
+    }
+
     let newMessage = new Message({
       conversationId: conversation._id,
       senderId: userId,
-      content: req.body.message,
+      text,
+      img,
     });
 
     newMessage.save();
