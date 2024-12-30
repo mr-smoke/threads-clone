@@ -6,7 +6,8 @@ import MessageInput from "@/components/MessageInput";
 import Message from "@/components/Message";
 
 const Messages = () => {
-  const { messages, isLoading } = useGetMessages();
+  const { messages, isLoading, fetchMessages } = useGetMessages();
+  console.log(messages);
 
   return (
     <>
@@ -35,6 +36,9 @@ const Messages = () => {
             </div>
           );
         })}
+        <button onClick={() => fetchMessages()} disabled={isLoading}>
+          Load More
+        </button>
       </div>
       <MessageInput />
     </>

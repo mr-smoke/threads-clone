@@ -93,6 +93,8 @@ export const sendMessage = async (req, res) => {
 export const getMessages = async (req, res) => {
   const receiverId = req.params.receiverId;
   const userId = req.user._id;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = parseInt(req.query.offset) || 0;
 
   try {
     if (userId.toString() === receiverId.toString()) {
@@ -109,11 +111,16 @@ export const getMessages = async (req, res) => {
 
     const messages = await Message.find({
       conversationId: conversation._id,
-    }).populate({
-      path: "senderId",
-      select: "username img",
-    });
+    })
+      .populate({
+        path: "senderId",
+        select: "username img",
+      })
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .skip(offset);
 
+    console.log(messages);
     res.json(messages);
   } catch (error) {
     res.status(500).json({ message: error.message });

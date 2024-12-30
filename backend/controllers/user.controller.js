@@ -155,14 +155,14 @@ export const updateUser = async (req, res) => {
     await user.save();
 
     await Post.updateMany(
-      { "replies.userId": userId },
+      { "comments.userId": userId },
       {
         $set: {
-          "replies.$[reply].username": user.username,
-          "replies.$[reply].img": user.img,
+          "comments.$[comment].username": user.username,
+          "comments.$[comment].avatar": user.img,
         },
       },
-      { arrayFilters: [{ "reply.userId": userId }] }
+      { arrayFilters: [{ "comment.userId": userId }] }
     );
 
     return res.status(200).json(user);
