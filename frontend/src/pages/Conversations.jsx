@@ -4,11 +4,22 @@ import { useAuth } from "@/context/AuthContext";
 import { useSocket } from "@/context/SocketContext";
 
 const Conversations = () => {
-  const { conversations, isLoading } = useGetConversations();
+  const { conversations, isLoading, fetchConversations } =
+    useGetConversations();
   const { onlineUsers } = useSocket();
 
+  const handleScroll = (e) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+    if (scrollTop + clientHeight === scrollHeight && !isLoading) {
+      fetchConversations();
+    }
+  };
+
   return (
-    <div className="flex flex-col">
+    <div
+      className="flex flex-col overflow-y-auto max-h-[calc(100vh-4rem)]"
+      onScroll={handleScroll}
+    >
       {isLoading && <Loading />}
       {!conversations.length && !isLoading && (
         <p className="text-center text-2xl py-3">No conversation found</p>

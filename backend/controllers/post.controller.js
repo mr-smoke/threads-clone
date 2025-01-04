@@ -3,8 +3,16 @@ import User from "../models/user.model.js";
 import { v2 as cloudinary } from "cloudinary";
 
 export const getFeed = async (req, res) => {
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = parseInt(req.query.offset) || 0;
+
   try {
-    const posts = await Post.find().sort({ createdAt: -1 }).exec();
+    const posts = await Post.find()
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .skip(offset)
+      .exec();
+
     return res.status(200).json(posts);
   } catch (error) {
     return res.status(500).send(error.message);

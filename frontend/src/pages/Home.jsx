@@ -3,7 +3,14 @@ import Post from "@/components/Post";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const Home = () => {
-  const { feed, isLoading } = useGetFeed();
+  const { feed, isLoading, fetchFeed } = useGetFeed();
+
+  const handleScroll = (e) => {
+    const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
+    if (scrollTop + clientHeight >= scrollHeight && !isLoading) {
+      fetchFeed();
+    }
+  };
 
   if (isLoading) {
     return (
@@ -24,7 +31,10 @@ const Home = () => {
 
   return (
     <main className="flex flex-col justify-center">
-      <section className="flex flex-col">
+      <section
+        className="flex flex-col overflow-y-auto max-h-[calc(100vh-4rem)]"
+        onScroll={handleScroll}
+      >
         {feed.map((post) => (
           <Post key={post._id} post={post} />
         ))}

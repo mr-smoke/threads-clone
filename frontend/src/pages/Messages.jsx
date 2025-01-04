@@ -7,11 +7,20 @@ import Message from "@/components/Message";
 
 const Messages = () => {
   const { messages, isLoading, fetchMessages } = useGetMessages();
-  console.log(messages);
+
+  const handleScroll = (e) => {
+    const { scrollTop } = e.currentTarget;
+    if (scrollTop === 0 && !isLoading) {
+      fetchMessages();
+    }
+  };
 
   return (
     <>
-      <div className="p-3 flex-1 flex flex-col gap-1 mb-3 md:mb-20">
+      <div
+        className="p-3 flex-1 flex flex-col gap-1 md:pb-20 overflow-y-auto max-h-[calc(100vh-4rem)]"
+        onScroll={handleScroll}
+      >
         {isLoading && <Loading />}
         {!messages.length && !isLoading && (
           <div className="text-5xl flex flex-col items-center justify-center h-full gap-12">
@@ -36,9 +45,6 @@ const Messages = () => {
             </div>
           );
         })}
-        <button onClick={() => fetchMessages()} disabled={isLoading}>
-          Load More
-        </button>
       </div>
       <MessageInput />
     </>

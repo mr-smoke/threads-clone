@@ -5,12 +5,18 @@ import { v2 as cloudinary } from "cloudinary";
 
 export const getConversations = async (req, res) => {
   const userId = req.user._id;
+  const limit = parseInt(req.query.limit) || 14;
+  const offset = parseInt(req.query.offset) || 0;
 
   try {
-    let conversations = await Conversation.find({ userIds: userId }).populate({
-      path: "userIds",
-      select: "username img",
-    });
+    let conversations = await Conversation.find({ userIds: userId })
+      .populate({
+        path: "userIds",
+        select: "username img",
+      })
+      .sort({ updatedAt: -1 })
+      .limit(limit)
+      .skip(offset);
 
     conversations = conversations.map((conversation) => {
       const user = conversation.userIds.find(
