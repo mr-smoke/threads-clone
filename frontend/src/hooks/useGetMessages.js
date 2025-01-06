@@ -11,6 +11,7 @@ const useGetMessages = () => {
   const { socket } = useSocket();
   const { messages, setMessages } = useMessageStore();
   const [offset, setOffset] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
     socket?.on("newMessage", (message) => {
@@ -23,6 +24,8 @@ const useGetMessages = () => {
   }, [socket, messages, setMessages]);
 
   const fetchMessages = async () => {
+    if (!hasMore) return;
+
     try {
       setIsLoading(true);
       const response = await fetch(
@@ -33,6 +36,9 @@ const useGetMessages = () => {
         }
       );
       const data = await response.json();
+      if (data.length < 10) {
+        setHasMore(false);
+      }
 
       if (data.error) {
         toast({

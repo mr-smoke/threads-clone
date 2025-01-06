@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
 const useGetFeed = () => {
-  const [isLoading, setIsLoading] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const [feed, setFeed] = useState([]);
   const { toast } = useToast();
   const [offset, setOffset] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
 
   const fetchFeed = async () => {
+    if (!hasMore) return;
+
     try {
       setIsLoading(true);
       const response = await fetch(
@@ -18,6 +21,10 @@ const useGetFeed = () => {
         }
       );
       const data = await response.json();
+      if (data.length < 10) {
+        setHasMore(false);
+      }
+
       setFeed([...feed, ...data]);
       setOffset(offset + 10);
     } catch (error) {
