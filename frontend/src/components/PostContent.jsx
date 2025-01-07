@@ -1,67 +1,31 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import ImgDialog from "@/components/ImgDialog";
+
+const renderImages = (images, className) => {
+  return images.map((image, index) => (
+    <ImgDialog key={index} img={image} className={className} />
+  ));
+};
 
 const PostContent = ({ post }) => {
+  const { text, img } = post;
+  const imgCount = img.length;
+
   return (
     <div className="flex flex-col">
       <a href={`/post/${post._id}`}>
-        <p>{post.text}</p>
+        <p>{text}</p>
       </a>
       <div className="flex pb-2">
-        {post.img.length === 1 ? (
-          <Dialog>
-            <DialogTrigger>
-              <img
-                src={post.img[0]}
-                alt="Image 1"
-                className="max-h-[430px] object-cover rounded-lg"
-              />
-            </DialogTrigger>
-            <DialogContent className="max-w-max">
-              <DialogHeader>
-                <DialogTitle></DialogTitle>
-                <DialogDescription>
-                  <img
-                    src={post.img[0]}
-                    alt="Image 1"
-                    className="h-full max-h-screen object-cover rounded-lg"
-                  />
-                </DialogDescription>
-              </DialogHeader>
-            </DialogContent>
-          </Dialog>
+        {imgCount === 1 ? (
+          <ImgDialog img={img[0]} className="max-h-[430px]" />
+        ) : imgCount === 2 ? (
+          <div className="flex gap-2">
+            {renderImages(img, "w-1/2 max-h-96")}
+          </div>
         ) : (
-          <>
-            {post.img.length === 2 ? (
-              <div className="flex gap-2">
-                {post.img.map((image, index) => (
-                  <img
-                    key={index}
-                    src={image}
-                    alt={`Image ${index + 1}`}
-                    className="w-1/2 max-h-96 object-cover rounded-lg"
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="flex gap-2 overflow-x-auto w-full">
-                {post.img.map((image, index) => (
-                  <img
-                    key={index}
-                    src={image}
-                    alt={`Image ${index + 1}`}
-                    className="flex-shrink-1 w-60 max-h-72 object-cover rounded-lg"
-                  />
-                ))}
-              </div>
-            )}
-          </>
+          <div className="flex gap-2 overflow-x-auto w-full">
+            {renderImages(img, "flex-shrink-1 w-60 max-h-72")}
+          </div>
         )}
       </div>
     </div>

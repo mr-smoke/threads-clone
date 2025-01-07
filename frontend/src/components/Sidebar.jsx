@@ -17,7 +17,7 @@ const Sidebar = () => {
   const { user } = useAuth();
 
   return (
-    <div className="fixed bottom-0 flex items-center justify-center py-2 w-full  md:h-screen md:left-0 md:flex-col md:justify-between md:w-20 bg-black z-10">
+    <div className="fixed bottom-0 flex items-center justify-center py-1 w-full  md:h-screen md:left-0 md:flex-col md:justify-between md:w-20 bg-black z-10">
       <div className="hidden md:block h-16"></div>
       <div className="flex md:flex-col items-center">
         <a

@@ -21,7 +21,7 @@ const MessageInput = () => {
 
   return (
     <form
-      className="bg-black p-4 flex gap-3 fixed bottom-0 z-10 w-full md:w-[620px]"
+      className="bg-black p-2 flex gap-3 fixed bottom-0 z-10 w-full md:w-[620px]"
       onSubmit={submitHandler}
     >
       <div className="flex-1 bg-slate-700 rounded-lg flex">

@@ -18,7 +18,7 @@ const Messages = () => {
   return (
     <>
       <div
-        className="p-3 flex-1 flex flex-col gap-1 md:pb-20 overflow-y-auto max-h-[calc(100vh-4rem)]"
+        className="p-3 flex-1 flex flex-col gap-1 overflow-y-auto max-h-[calc(100vh-8rem)]"
         onScroll={handleScroll}
       >
         {isLoading && <Loading />}

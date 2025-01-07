@@ -17,7 +17,7 @@ const Conversations = () => {
 
   return (
     <div
-      className="flex flex-col overflow-y-auto max-h-[calc(100vh-4rem)]"
+      className="flex flex-col overflow-y-auto max-h-[calc(100vh-8rem)] md:max-h-[calc(100vh-4rem)]"
       onScroll={handleScroll}
     >
       {isLoading && <Loading />}
