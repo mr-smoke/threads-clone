@@ -6,7 +6,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("threads");
-  const { posts, isLoading } = useGetUserPosts();
+  const { posts, isLoading, fetchPosts } = useGetUserPosts();
+
+  const handleScroll = (e) => {
+    const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
+    if (scrollTop + clientHeight >= scrollHeight && !isLoading) {
+      fetchPosts();
+    }
+  };
 
   return (
     <main className="flex flex-col justify-center bg-neutral-900 rounded-xl">
@@ -36,7 +43,10 @@ const Profile = () => {
             Replies
           </button>
         </div>
-        <div className="flex flex-col items-center">
+        <div
+          className="flex flex-col items-center overflow-y-auto max-h-[calc(100vh-335px)] md:max-h-[calc(100vh-265px)]"
+          onScroll={handleScroll}
+        >
           {isLoading && (
             <>
               {[...Array(8)].map((_, index) => (

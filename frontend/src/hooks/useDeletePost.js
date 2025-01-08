@@ -27,6 +27,7 @@ const useDeletePost = () => {
           description: "Post deleted successfully",
           variant: "success",
         });
+        window.location.reload();
       }
     } catch (error) {
       toast({

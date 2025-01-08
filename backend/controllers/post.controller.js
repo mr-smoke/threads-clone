@@ -64,10 +64,16 @@ export const getPost = async (req, res) => {
 
 export const userPosts = async (req, res) => {
   const { id } = req.params;
+  const limit = parseInt(req.query.limit) || 10;
+  const offset = parseInt(req.query.offset) || 0;
+
   try {
     const posts = await Post.find({ userId: id })
       .sort({ createdAt: -1 })
+      .limit(limit)
+      .skip(offset)
       .exec();
+
     return res.status(200).json(posts);
   } catch (error) {
     return res.status(500).send(error.message);

@@ -23,7 +23,7 @@ const PostContent = ({ post }) => {
             {renderImages(img, "w-1/2 max-h-96")}
           </div>
         ) : (
-          <div className="flex gap-2 overflow-x-auto w-full">
+          <div className="flex gap-2 overflow-x-auto w-full pb-1">
             {renderImages(img, "flex-shrink-1 w-60 max-h-72")}
           </div>
         )}

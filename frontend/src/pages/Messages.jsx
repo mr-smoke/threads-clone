@@ -18,12 +18,12 @@ const Messages = () => {
   return (
     <>
       <div
-        className="p-3 flex-1 flex flex-col gap-1 overflow-y-auto max-h-[calc(100vh-8rem)]"
+        className="p-3 flex-1 flex flex-col gap-1 overflow-y-auto max-h-[calc(100vh-8rem)] min-h-[calc(100vh-8rem)]"
         onScroll={handleScroll}
       >
         {isLoading && <Loading />}
         {!messages.length && !isLoading && (
-          <div className="text-5xl flex flex-col items-center justify-center h-full gap-12">
+          <div className="text-5xl flex flex-col items-center justify-center h-[calc(100vh-8rem)] gap-12">
             <p className="text-center">Say hello and start to chat.</p>
             <FaHandPaper className="w-20 h-20 animate-bounce" />
           </div>

@@ -1,5 +1,6 @@
 import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
+import User from "../models/user.model.js";
 import { getReceiverSocketId, io } from "../socket/socket.js";
 import { v2 as cloudinary } from "cloudinary";
 
@@ -46,6 +47,16 @@ export const sendMessage = async (req, res) => {
 
     if (userId.toString() === receiverId.toString()) {
       return res.status(400).json({ error: "You cannot message yourself" });
+    }
+
+    if (receiverId.length !== 24) {
+      return res.status(400).json({ error: "Invalid receiver id" });
+    }
+
+    const receiver = await User.findById(receiverId);
+
+    if (!receiver) {
+      return res.status(404).json({ error: "Receiver not found" });
     }
 
     if (!text && images.length === 0) {
@@ -107,6 +118,10 @@ export const getMessages = async (req, res) => {
       return res.status(400).json({ error: "You cannot message yourself" });
     }
 
+    if (receiverId.length !== 24) {
+      return res.status(400).json({ error: "Invalid receiver id" });
+    }
+
     const conversation = await Conversation.findOne({
       userIds: { $all: [userId, receiverId] },
     });
@@ -126,9 +141,9 @@ export const getMessages = async (req, res) => {
       .limit(limit)
       .skip(offset);
 
-    console.log(messages);
     res.json(messages);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };

@@ -7,34 +7,43 @@ const useGetUserPosts = () => {
   const [posts, setPosts] = useState([]);
   const { toast } = useToast();
   const { id } = useParams();
+  const [offset, setOffset] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+
+  const fetchPosts = async () => {
+    if (!hasMore) return;
+
+    try {
+      setIsLoading(true);
+      const response = await fetch(
+        `http://localhost:3000/api/post/user/${id}?limit=10&offset=${offset}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      const data = await response.json();
+      if (data.length < 10) {
+        setHasMore(false);
+      }
+
+      setPosts([...posts, ...data]);
+      setOffset(offset + 10);
+    } catch (error) {
+      toast({
+        description: error.message,
+        variant: "unsuccess",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(
-          `http://localhost:3000/api/post/user/${id}`,
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
-        const data = await response.json();
-        setPosts(data);
-      } catch (error) {
-        toast({
-          description: error.message,
-          variant: "unsuccess",
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchPosts();
-  }, [id]);
+  }, []);
 
-  return { posts, isLoading };
+  return { posts, isLoading, fetchPosts };
 };
 
 export default useGetUserPosts;
