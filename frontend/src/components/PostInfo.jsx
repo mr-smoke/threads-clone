@@ -1,22 +1,16 @@
+import { useEffect, useState } from "react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
+import { Skeleton } from "./ui/skeleton";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { formatDistanceToNow } from "date-fns";
 import { FaEllipsisH, FaExclamationTriangle, FaTrash } from "react-icons/fa";
 import { useAuth } from "@/context/AuthContext";
 import useDeletePost from "@/hooks/useDeletePost";
 import useGetProfile from "@/hooks/useGetProfile";
-import useFollowUser from "@/hooks/useFollowUser";
-import { useEffect, useState } from "react";
-import { Skeleton } from "./ui/skeleton";
-import { formatDistanceToNow } from "date-fns";
 import Button from "./button";
 import ProfileCard from "./ProfileCard";
 

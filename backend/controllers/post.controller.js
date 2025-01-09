@@ -21,11 +21,10 @@ export const getFeed = async (req, res) => {
 
 export const createPost = async (req, res) => {
   const userId = req.user._id;
+  const { text, images } = req.body;
+  let img = [];
 
   try {
-    const { text, images } = req.body;
-    let img = [];
-
     if (!text && images.length === 0) {
       return res.status(400).json({ error: "Text or image is required" });
     }
@@ -95,6 +94,17 @@ export const deletePost = async (req, res) => {
       return res.status(401).json({ error: "Unauthorized" });
     }
 
+    if (post.img.length > 0) {
+      const publicIds = post.img.map((img) => {
+        const parts = img.split("/");
+        const lastSegment = parts[parts.length - 1];
+        const [publicId] = lastSegment.split(".");
+        return publicId;
+      });
+
+      await cloudinary.api.delete_resources(publicIds);
+    }
+
     await Post.findByIdAndDelete(id);
     return res.status(200).json({ message: "Post deleted" });
   } catch (error) {
@@ -131,11 +141,10 @@ export const likePost = async (req, res) => {
 export const commentPost = async (req, res) => {
   const { id } = req.params;
   const { img: avatar, username, id: userId } = req.user;
+  const { text, images } = req.body;
+  let img = [];
 
   try {
-    const { text, images } = req.body;
-    let img = [];
-
     if (!text && images.length === 0) {
       return res.status(400).json({ error: "Comment or image is required" });
     }

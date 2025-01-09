@@ -16,6 +16,7 @@ const useLogout = () => {
         description: "Logged out successfully",
         variant: "success",
       });
+      window.location.href = "/";
       setUser(null);
     } catch (error) {
       toast({

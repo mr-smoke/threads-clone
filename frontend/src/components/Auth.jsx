@@ -28,7 +28,7 @@ const Auth = () => {
         </a>
       ) : (
         <Dialog>
-          <DialogTrigger>
+          <DialogTrigger asChild>
             <button className="bg-white text-black font-semibold h-8 px-4 rounded-lg">
               Logout
             </button>
@@ -36,11 +36,9 @@ const Auth = () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>
-                <h1 className="text-2xl font-semibold">
-                  Do you want to logout?
-                </h1>
+                <p className="text-2xl font-semibold">Do you want to logout?</p>
               </DialogTitle>
-              <DialogDescription>
+              <DialogDescription asChild>
                 <div className="flex justify-end gap-3 pt-3">
                   <DialogClose asChild>
                     <button className="bg-neutral-700 text-white font-semibold px-5 py-3 rounded-lg hover:bg-neutral-800 w-max">

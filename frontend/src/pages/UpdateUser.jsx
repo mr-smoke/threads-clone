@@ -7,7 +7,7 @@ import { useRef, useState } from "react";
 const UpdateUser = () => {
   const { user } = useAuth();
   const { updateUser, isLoading } = useUpdateUser();
-  const { image, uploadImage } = useUploadImage();
+  const { images, uploadImage } = useUploadImage();
   const [formData, setFormData] = useState({
     email: user?.email,
     name: user?.name,
@@ -18,7 +18,7 @@ const UpdateUser = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    updateUser(formData, image);
+    updateUser(formData, images);
   };
 
   return (
@@ -41,7 +41,7 @@ const UpdateUser = () => {
                 type="button"
                 onClick={() => imageRef.current.click()}
               >
-                Change Image
+                {images.length > 0 ? "Image Added" : "Change Avatar"}
               </button>
               <input
                 ref={imageRef}
@@ -107,7 +107,7 @@ const UpdateUser = () => {
             <button
               className="mt-3 bg-red-500 text-white font-semibold px-5 py-3 rounded-lg w-40 self-center hover:bg-red-600"
               type="button"
-              onClick={() => (window.location.href = "/")}
+              onClick={() => (window.location.href = `/${user._id}`)}
             >
               Cancel
             </button>

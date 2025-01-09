@@ -11,7 +11,7 @@ const ProfileCard = ({ profile, user }) => {
 
   return (
     <HoverCard>
-      <HoverCardTrigger>
+      <HoverCardTrigger asChild>
         <a href={`/${profile._id}`}>
           <p className="font-semibold hover:underline">{profile.name}</p>
         </a>

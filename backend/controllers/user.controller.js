@@ -6,9 +6,9 @@ import mongoose from "mongoose";
 import { v2 as cloudinary } from "cloudinary";
 
 export const signup = async (req, res) => {
-  try {
-    const { email, username, password, name, confirmPassword } = req.body;
+  const { email, username, password, name, confirmPassword } = req.body;
 
+  try {
     if (!email || !username || !password || !name || !confirmPassword) {
       return res.status(400).json({ error: "Please fill in all fields" });
     }
@@ -41,9 +41,9 @@ export const signup = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
+  try {
     if (!email || !password) {
       return res.status(400).json({ error: "Please fill in all fields" });
     }
@@ -82,10 +82,9 @@ export const logout = async (req, res) => {
 
 export const getUser = async (req, res) => {
   const { query } = req.params;
+  let user;
 
   try {
-    let user;
-
     if (mongoose.Types.ObjectId.isValid(query)) {
       user = await User.findById(query)
         .select("-password")
@@ -109,9 +108,9 @@ export const getUser = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-  const { name, username, email, bio, image } = req.body;
+  const { name, username, email, bio, images } = req.body;
   const userId = req.user._id;
-  let img;
+  let img = [];
 
   try {
     const user = await User.findById(userId).exec();
@@ -136,21 +135,24 @@ export const updateUser = async (req, res) => {
       return res.status(400).json({ error: "User already exists" });
     }
 
-    if (image) {
+    if (images && images.length > 0) {
       if (user.img) {
         const publicId = user.img.split("/").pop().split(".")[0];
         await cloudinary.uploader.destroy(publicId);
       }
 
-      const uploadedResponse = await cloudinary.uploader.upload(image);
-      img = uploadedResponse.secure_url;
+      const uploadPromises = images.map((image) =>
+        cloudinary.uploader.upload(image)
+      );
+      const uploadedResponses = await Promise.all(uploadPromises);
+      img = uploadedResponses.map((response) => response.secure_url);
     }
 
     user.name = name || user.name;
     user.username = username || user.username;
     user.email = email || user.email;
     user.bio = bio || user.bio;
-    user.img = img || user.img;
+    user.img = img[0] || user.img;
 
     await user.save();
 
@@ -167,6 +169,7 @@ export const updateUser = async (req, res) => {
 
     return res.status(200).json(user);
   } catch (error) {
+    console.log(error);
     return res.status(500).send(error.message);
   }
 };

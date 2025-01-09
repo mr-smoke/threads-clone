@@ -38,9 +38,9 @@ const CreatePost = () => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            <h1 className="text-2xl font-semibold">Create Post</h1>
+            <p className="text-2xl font-semibold">Create Post</p>
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription asChild>
             <form onSubmit={submitHandler}>
               <div className="flex flex-col gap-3">
                 <textarea

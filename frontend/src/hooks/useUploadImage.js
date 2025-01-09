@@ -15,7 +15,7 @@ const useUploadImage = () => {
         return false;
       }
       if (file.size > MAX_SIZE) {
-        toast({ description: "File size exceeds 5MB", variant: "unsuccess" });
+        toast({ description: "File size exceeds 1MB", variant: "unsuccess" });
         return false;
       }
       return true;
