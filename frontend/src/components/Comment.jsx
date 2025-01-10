@@ -21,7 +21,7 @@ const Comment = ({ comment }) => {
       <div className="flex-1 flex flex-col ml-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <ProfileCard profile={profile} user={user} />
+            <ProfileCard profile={profile} user={user} isLoading={isLoading} />
           </div>
           <Popover>
             <PopoverTrigger>

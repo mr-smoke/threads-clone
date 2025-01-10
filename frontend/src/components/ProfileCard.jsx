@@ -5,9 +5,14 @@ import {
 } from "@/components/ui/hover-card";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import useFollowUser from "@/hooks/useFollowUser";
+import { Skeleton } from "./ui/skeleton";
 
-const ProfileCard = ({ profile, user }) => {
+const ProfileCard = ({ profile, user, isLoading }) => {
   const { followed, followersCount, handleFollow } = useFollowUser(profile);
+
+  if (isLoading) {
+    return <Skeleton className="h-4 w-[150px]" />;
+  }
 
   return (
     <HoverCard>

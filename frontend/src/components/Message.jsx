@@ -19,7 +19,7 @@ const Message = ({ message }) => {
         className={`flex items-end gap-2 ${isOwner ? "flex-row-reverse" : ""}`}
       >
         <img
-          className={`w-8 h-8 rounded-full`}
+          className="w-8 h-8 rounded-full"
           src={message.senderId.img}
           alt="Message img"
         />

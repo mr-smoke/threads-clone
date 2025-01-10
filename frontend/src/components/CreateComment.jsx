@@ -14,6 +14,7 @@ import { useRef, useState } from "react";
 
 const CreateComment = ({ postId, setCommentsCount }) => {
   const [text, setText] = useState("");
+  const [open, setOpen] = useState(false);
   const { commentPost, isLoading } = useCreateComment();
   const { images, setImages, uploadImage } = useUploadImage();
   const imageRef = useRef(null);
@@ -24,12 +25,15 @@ const CreateComment = ({ postId, setCommentsCount }) => {
     if (res) {
       setText("");
       setCommentsCount((prevCount) => prevCount + 1);
+      setOpen(false);
     }
   };
 
   return (
     <Dialog
+      open={open}
       onOpenChange={() => {
+        setOpen((prev) => !prev);
         setText("");
         setImages([]);
       }}
@@ -74,15 +78,13 @@ const CreateComment = ({ postId, setCommentsCount }) => {
                     accept="image/*"
                     onChange={uploadImage}
                   />
-                  <DialogClose asChild>
-                    <button
-                      className="bg-blue-500 text-white font-semibold px-5 py-3 rounded-lg hover:bg-blue-600 w-max"
-                      type="submit"
-                      disabled={isLoading}
-                    >
-                      {isLoading ? <Loading /> : "Post"}
-                    </button>
-                  </DialogClose>
+                  <button
+                    className="bg-blue-500 text-white font-semibold px-5 py-3 rounded-lg hover:bg-blue-600 w-max"
+                    type="submit"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? <Loading /> : "Post"}
+                  </button>
                 </div>
               </div>
             </form>

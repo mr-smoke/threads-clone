@@ -44,7 +44,7 @@ const Profile = () => {
           </button>
         </div>
         <div
-          className="flex flex-col items-center overflow-y-auto max-h-[calc(100vh-335px)] md:max-h-[calc(100vh-265px)]"
+          className="flex flex-col items-center overflow-y-auto max-h-[calc(100vh-360px)] md:max-h-[calc(100vh-290px)]"
           onScroll={handleScroll}
         >
           {isLoading && (

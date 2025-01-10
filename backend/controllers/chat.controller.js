@@ -40,11 +40,10 @@ export const getConversations = async (req, res) => {
 export const sendMessage = async (req, res) => {
   const userId = req.user._id;
   const receiverId = req.params.receiverId;
+  const { text, images } = req.body;
+  let img = [];
 
   try {
-    const { text, images } = req.body;
-    let img = [];
-
     if (userId.toString() === receiverId.toString()) {
       return res.status(400).json({ error: "You cannot message yourself" });
     }
@@ -126,12 +125,8 @@ export const getMessages = async (req, res) => {
       userIds: { $all: [userId, receiverId] },
     });
 
-    if (!conversation) {
-      return res.status(404).json({ error: "Conversation not found" });
-    }
-
     const messages = await Message.find({
-      conversationId: conversation._id,
+      conversationId: conversation?._id,
     })
       .populate({
         path: "senderId",
@@ -143,7 +138,6 @@ export const getMessages = async (req, res) => {
 
     res.json(messages);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
