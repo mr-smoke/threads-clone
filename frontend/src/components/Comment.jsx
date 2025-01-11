@@ -35,13 +35,11 @@ const Comment = ({ comment }) => {
             </PopoverContent>
           </Popover>
         </div>
-        <div className="flex flex-col flex-1">
-          <p className="py-1">{comment.text}</p>
-          <div className="flex">
-            {comment.img.length === 1 && (
-              <ImgDialog img={comment.img[0]} className="max-h-[430px]" />
-            )}
-          </div>
+        <div className="flex flex-col flex-1 pt-1">
+          {comment.text.length > 0 && <p>{comment.text}</p>}
+          {comment.img.length === 1 && (
+            <ImgDialog img={comment.img[0]} className="max-h-[430px]" />
+          )}
         </div>
       </div>
     </div>

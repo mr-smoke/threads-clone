@@ -32,6 +32,9 @@ const useCreateComment = () => {
           description: "Comment added",
           variant: "success",
         });
+        if (window.location.pathname === `/post/${id}`) {
+          window.location.reload();
+        }
         return true;
       }
     } catch (error) {

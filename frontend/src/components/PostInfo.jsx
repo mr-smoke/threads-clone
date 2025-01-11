@@ -35,7 +35,7 @@ const PostInfo = ({ post }) => {
           <AvatarImage src={profile.img} />
         </Avatar>
       </a>
-      <div className="flex justify-between items-center pb-1">
+      <div className="flex justify-between items-center">
         <div className="flex items-center">
           <ProfileCard profile={profile} user={user} />
           <a href={`/post/${post._id}`}>
