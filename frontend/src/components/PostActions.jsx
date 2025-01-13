@@ -49,10 +49,15 @@ const PostActions = ({ post }) => {
   };
 
   return (
-    <div className="flex items-center gap-6 text-sm">
-      <div className="flex items-center gap-1.5">
+    <div className="flex items-center gap-6 text-sm -ml-2 -mb-1">
+      <div className="flex items-center gap-2 rounded-xl p-2 transition-colors duration-200 hover:bg-red-500 hover:bg-opacity-10 group">
         <button onClick={handleLike}>
-          <svg width="20" height="20" viewBox="0 0 24 24">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            className="group-hover:text-red-500 transition-colors duration-200"
+          >
             <g transform="translate(0 -1028.4)">
               <path
                 d="m7 1031.4c-1.5355 0-3.0784 0.5-4.25 1.7-2.3431 2.4-2.2788 6.1 0 8.5l9.25 9.8 9.25-9.8c2.279-2.4 2.343-6.1 0-8.5-2.343-2.3-6.157-2.3-8.5 0l-0.75 0.8-0.75-0.8c-1.172-1.2-2.7145-1.7-4.25-1.7z"
@@ -63,15 +68,24 @@ const PostActions = ({ post }) => {
             </g>
           </svg>
         </button>
-        {likesCount}
+        <span className="group-hover:text-red-500 transition-colors duration-200">
+          {likesCount}
+        </span>
       </div>
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-2 rounded-xl p-2 transition-colors duration-200 hover:bg-blue-500 hover:bg-opacity-10 group">
         <CreateComment postId={post._id} setCommentsCount={setCommentsCount} />
-        {commentsCount}
+        <span className="group-hover:text-blue-500 transition-colors duration-200">
+          {commentsCount}
+        </span>
       </div>
       <Popover>
         <PopoverTrigger>
-          <FaRegPaperPlane size={17} />
+          <div className="flex items-center gap-2 rounded-xl p-2 transition-colors duration-200 hover:bg-green-500 hover:bg-opacity-10 group">
+            <FaRegPaperPlane
+              size={17}
+              className="group-hover:text-green-500 transition-colors duration-200"
+            />
+          </div>
         </PopoverTrigger>
         <PopoverContent
           align="start"

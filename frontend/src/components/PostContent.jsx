@@ -11,18 +11,20 @@ const PostContent = ({ post }) => {
   const imgCount = img.length;
 
   return (
-    <div className="flex flex-col py-1 gap-1">
+    <div className="flex flex-col pb-1 gap-1">
       {text.length > 0 && (
         <a href={`/post/${post._id}`}>
           <p>{text}</p>
         </a>
       )}
       {imgCount === 0 ? null : imgCount === 1 ? (
-        <ImgDialog img={img[0]} className="max-h-[430px]" />
+        <ImgDialog img={img[0]} className="max-h-[430px] pt-1" />
       ) : imgCount === 2 ? (
-        <div className="flex gap-2">{renderImages(img, "w-1/2 max-h-96")}</div>
+        <div className="flex gap-2 pt-1">
+          {renderImages(img, "w-1/2 max-h-96")}
+        </div>
       ) : (
-        <div className="flex gap-2 overflow-x-auto w-full">
+        <div className="flex gap-2 overflow-x-auto w-full pt-1">
           {renderImages(img, "flex-shrink-1 w-60 max-h-72 pb-1")}
         </div>
       )}
