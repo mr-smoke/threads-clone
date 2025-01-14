@@ -236,3 +236,34 @@ export const freeze = async (req, res) => {
     return res.status(500).send(error.message);
   }
 };
+
+export const changePassword = async (req, res) => {
+  const userId = req.user._id;
+  const { currentPassword, newPassword, confirmPassword } = req.body;
+
+  try {
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      return res.status(400).json({ error: "Please fill in all fields" });
+    }
+
+    const user = await User.findById(userId).exec();
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ error: "Invalid credentials" });
+    }
+
+    if (newPassword !== confirmPassword) {
+      return res.status(400).json({ error: "Passwords do not match" });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 12);
+
+    user.password = hashedPassword;
+    await user.save();
+
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};

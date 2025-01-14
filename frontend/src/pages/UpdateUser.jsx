@@ -3,6 +3,7 @@ import { useAuth } from "@/context/AuthContext";
 import useUpdateUser from "@/hooks/useUpdateUser";
 import useUploadImage from "@/hooks/useUploadImage";
 import { useRef, useState } from "react";
+import ChangePassword from "@/components/ChangePassword";
 
 const UpdateUser = () => {
   const { user } = useAuth();
@@ -24,9 +25,11 @@ const UpdateUser = () => {
   return (
     <main className="flex flex-col items-center bg-neutral-900 rounded-xl">
       <section className="flex flex-col py-4 px-6">
-        <h1 className="text-3xl font-bold text-center">Update Profile</h1>
+        <h1 className="text-3xl font-bold text-center pb-4">Update Profile</h1>
+        <ChangePassword />
+        <hr className="border-neutral-700 my-4" />
         <form
-          className="flex flex-col gap-3 pt-3 w-72 sm:w-96"
+          className="flex flex-col gap-3 w-72 sm:w-96"
           onSubmit={submitHandler}
         >
           <div className="flex justify-between gap-10 w-full">
