@@ -186,3 +186,44 @@ export const getPersonalFeed = async (req, res) => {
     return res.status(500).send(error.message);
   }
 };
+
+export const deleteComment = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user._id;
+
+  try {
+    const post = await Post.findOne({ "comments._id": id }).exec();
+
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    const comment = post.comments.find(
+      (comment) => comment._id.toString() === id
+    );
+
+    if (comment.userId.toString() !== userId.toString()) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    if (comment.img.length > 0) {
+      const publicIds = comment.img.map((img) => {
+        const parts = img.split("/");
+        const lastSegment = parts[parts.length - 1];
+        const [publicId] = lastSegment.split(".");
+        return publicId;
+      });
+
+      await cloudinary.api.delete_resources(publicIds);
+    }
+
+    post.comments = post.comments.filter(
+      (comment) => comment._id.toString() !== id
+    );
+
+    await post.save();
+    return res.status(200).json({ message: "Comment deleted" });
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+};
