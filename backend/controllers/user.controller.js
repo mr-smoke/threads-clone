@@ -34,8 +34,16 @@ export const signup = async (req, res) => {
     await newUser.save();
     tokenization(newUser._id, res);
 
-    return res.status(201).json(newUser);
+    return res.status(201).json({
+      _id: newUser._id,
+      name: newUser.name,
+      email: newUser.email,
+      username: newUser.username,
+      img: newUser.img,
+      bio: newUser.bio,
+    });
   } catch (error) {
+    console.log(error);
     return res.status(500).send(error.message);
   }
 };
@@ -65,7 +73,14 @@ export const login = async (req, res) => {
 
     tokenization(user._id, res);
 
-    return res.status(200).json(user);
+    return res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      username: user.username,
+      img: user.img,
+      bio: user.bio,
+    });
   } catch (error) {
     return res.status(500).send(error.message);
   }
@@ -167,9 +182,15 @@ export const updateUser = async (req, res) => {
       { arrayFilters: [{ "comment.userId": userId }] }
     );
 
-    return res.status(200).json(user);
+    return res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      username: user.username,
+      img: user.img,
+      bio: user.bio,
+    });
   } catch (error) {
-    console.log(error);
     return res.status(500).send(error.message);
   }
 };
@@ -214,7 +235,14 @@ export const getAuthUser = async (req, res) => {
   try {
     const user = await User.findById(userId).exec();
 
-    return res.status(200).json(user);
+    return res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      username: user.username,
+      img: user.img,
+      bio: user.bio,
+    });
   } catch (error) {
     return res.status(500).send(error.message);
   }
@@ -231,7 +259,14 @@ export const freeze = async (req, res) => {
 
     res.clearCookie("token");
 
-    return res.status(200).json(user);
+    return res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      username: user.username,
+      img: user.img,
+      bio: user.bio,
+    });
   } catch (error) {
     return res.status(500).send(error.message);
   }
@@ -262,7 +297,14 @@ export const changePassword = async (req, res) => {
     user.password = hashedPassword;
     await user.save();
 
-    return res.status(200).json(user);
+    return res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      username: user.username,
+      img: user.img,
+      bio: user.bio,
+    });
   } catch (error) {
     return res.status(500).send(error.message);
   }

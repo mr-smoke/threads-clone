@@ -77,6 +77,7 @@ const Signup = () => {
               className="p-2 rounded-lg text-black"
               type="text"
               id="username"
+              minLength={6}
               maxLength={25}
               onChange={(e) =>
                 setFormData({ ...formData, username: e.target.value })
