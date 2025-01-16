@@ -52,7 +52,11 @@ const MessageInput = () => {
         type="submit"
         disabled={isLoading}
       >
-        <FaPaperPlane className="w-5 h-5" />
+        {isLoading ? (
+          <div className="w-5 h-5 border-t-2 border-b-2 border-slate-200 animate-spin" />
+        ) : (
+          <FaPaperPlane className="w-5 h-5" />
+        )}
       </button>
     </form>
   );

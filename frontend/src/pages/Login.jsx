@@ -36,6 +36,7 @@ const Login = () => {
               className="p-2 rounded-lg text-black"
               type="password"
               id="password"
+              minLength={6}
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
               }

@@ -6,9 +6,15 @@ import {
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import useFollowUser from "@/hooks/useFollowUser";
 import { Skeleton } from "./ui/skeleton";
+import Loading from "./Loading";
 
 const ProfileCard = ({ profile, user, isLoading }) => {
-  const { followed, followersCount, handleFollow } = useFollowUser(profile);
+  const {
+    followed,
+    followersCount,
+    handleFollow,
+    isLoading: followLoading,
+  } = useFollowUser(profile);
 
   if (isLoading) {
     return <Skeleton className="h-4 w-[150px]" />;
@@ -40,8 +46,9 @@ const ProfileCard = ({ profile, user, isLoading }) => {
             <button
               className="text-white bg-blue-500 px-4 py-1 rounded-md"
               onClick={handleFollow}
+              disabled={followLoading}
             >
-              {followed ? "Unfollow" : "Follow"}
+              {followLoading ? <Loading /> : followed ? "Unfollow" : "Follow"}
             </button>
           )}
         </div>

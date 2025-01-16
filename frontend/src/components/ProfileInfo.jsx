@@ -21,7 +21,12 @@ const ProfileInfo = () => {
   const { user } = useAuth();
   const { toast } = useToast();
   const isOwner = profile._id === user?._id;
-  const { followed, followersCount, handleFollow } = useFollowUser(profile);
+  const {
+    followed,
+    followersCount,
+    handleFollow,
+    isLoading: followLoading,
+  } = useFollowUser(profile);
 
   const copyLink = () => {
     navigator.clipboard.writeText(`http://localhost:5173/${id}`);
@@ -90,8 +95,9 @@ const ProfileInfo = () => {
           <button
             className="w-full text-center py-2 font-semibold rounded-lg bg-neutral-800 hover:bg-neutral-700"
             onClick={handleFollow}
+            disabled={followLoading}
           >
-            {followed ? "Unfollow" : "Follow"}
+            {followLoading ? <Loading /> : followed ? "Unfollow" : "Follow"}
           </button>
           <a href={`/chat/${id}`} className="w-full">
             <button className="w-full text-center py-2 font-semibold rounded-lg bg-neutral-800 hover:bg-neutral-700">

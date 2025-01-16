@@ -46,7 +46,6 @@ const ChangePassword = () => {
                 type="password"
                 placeholder="Current Password"
                 minLength={6}
-                maxLength={25}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
@@ -59,7 +58,6 @@ const ChangePassword = () => {
                 type="password"
                 placeholder="New Password"
                 minLength={6}
-                maxLength={25}
                 onChange={(e) =>
                   setFormData({ ...formData, newPassword: e.target.value })
                 }
@@ -69,7 +67,6 @@ const ChangePassword = () => {
                 type="password"
                 placeholder="Confirm Password"
                 minLength={6}
-                maxLength={25}
                 onChange={(e) =>
                   setFormData({
                     ...formData,

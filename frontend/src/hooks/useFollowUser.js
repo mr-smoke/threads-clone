@@ -73,7 +73,7 @@ const useFollowUser = (profile) => {
     );
   };
 
-  return { followed, followersCount, handleFollow };
+  return { followed, followersCount, handleFollow, isLoading };
 };
 
 export default useFollowUser;
