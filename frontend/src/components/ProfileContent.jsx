@@ -12,28 +12,25 @@ const ProfileContent = ({ user }) => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <>
-        {[...Array(8)].map((_, index) => (
-          <div key={index} className="flex py-3 px-6 w-full">
-            <Skeleton className="h-9 w-9 rounded-full" />
-            <div className="flex flex-col flex-1 ml-3 gap-2">
-              <Skeleton className="h-4 w-[150px]" />
-              <Skeleton className="h-4" />
-              <Skeleton className="h-4 w-[250px]" />
-            </div>
-          </div>
-        ))}
-      </>
-    );
-  }
-
   return (
     <div
       className="overflow-y-auto max-h-[calc(100vh-410px)] md:max-h-[calc(100vh-340px)]"
       onScroll={handleScroll}
     >
+      {isLoading && (
+        <>
+          {[...Array(8)].map((_, index) => (
+            <div key={index} className="flex py-3 px-6 w-full">
+              <Skeleton className="h-9 w-9 rounded-full" />
+              <div className="flex flex-col flex-1 ml-3 gap-2">
+                <Skeleton className="h-4 w-[150px]" />
+                <Skeleton className="h-4" />
+                <Skeleton className="h-4 w-[250px]" />
+              </div>
+            </div>
+          ))}
+        </>
+      )}
       {posts.length === 0 && (
         <div className="text-neutral-500 text-lg my-4 text-center">
           No posts found
