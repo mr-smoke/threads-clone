@@ -1,7 +1,5 @@
 # Threads Clone - Fullstack
 
-![Banner](https://i.ibb.co/RP6K7wm/banner.png)
-
 ## Table of Contents
 
 - [About The Project](#about-the-project)
@@ -16,19 +14,7 @@
 
 ## About The Project
 
-Threads Clone is a full-stack social media application inspired by Threads.net, built with React, Node.js, Express.js, MongoDB, Zustand, Socket.io, Tailwind CSS, Shadcn.ui, and Cloudinary. This project offers a seamless platform for users to share posts with images, comment or like on others' posts, and engage in real-time messaging. It includes user authentication and authorization for secure access, and features profile management, allowing users to update their information or temporarily deactivate their accounts. It leverages the power of React for building a dynamic and responsive user interface, MongoDB for reliable and robust data storage, Express.js for handling server-side logic and API endpoints, Zustand for state management, Socket.io for real-time communication, Tailwind CSS for styling and responsive design, Shadcn.ui for pre-designed, customizable components and Cloudinary for uploading images.
-
-### Larger Devices
-
-- Click to play the gif.
-
-<a href="https://i.ibb.co/gdyNSsB/chat-app.gif" target="_blank"><img src="https://i.ibb.co/kJKj4YW/chat-app.gif" alt="blog-app" border="0" /></a>
-
-### Smaller Devices
-
-- Click to play the gif.
-
-<a href="https://i.ibb.co/GMBGfZQ/mobile-chat-app.gif" target="_blank"><img src="https://i.ibb.co/gWHQb0Z/mobile-chat-app.gif" alt="blog-app" border="0" /></a>
+Threads Clone is a full-stack social media application inspired by Threads.net, built with React, Node.js, Express.js, MongoDB, Zustand, Socket.io, Tailwind CSS, Shadcn.ui, and Cloudinary. This project offers a seamless platform for users to share posts with images, comment or like on others' posts, follow other users, and engage in real-time messaging. It includes user authentication and authorization for secure access, and features profile management, allowing users to update their information or temporarily deactivate their accounts. It leverages the power of React for building a dynamic and responsive user interface, MongoDB for reliable and robust data storage, Express.js for handling server-side logic and API endpoints, Zustand for state management, Socket.io for real-time communication, Tailwind CSS for styling and responsive design, Shadcn.ui for pre-designed, customizable components and Cloudinary for uploading images.
 
 ### Key Use Cases:
 
@@ -39,11 +25,11 @@ Threads Clone is a full-stack social media application inspired by Threads.net, 
 - Real-time messaging with image support using Socket.io.
 - Display online users.
 - Infinite scroll for posts and messages to enhance performance and user experience.
+- Managing cross-origin requests with cors, enabling smooth frontend-backend communication.
 - State management using Zustand for a predictable and maintainable state.
 - Efficient data querying and management with MongoDB.
 - Responsive and modern UI designed with Tailwind CSS and Shadcn.ui.
 - Server-side rendering with Express.js.
-- Managing cross-origin requests with cors, enabling smooth frontend-backend communication.
 - Real-time updates.
 
 ## Installation
@@ -124,8 +110,8 @@ To use the threads clone, follow these steps:
 
 - To add a new conversation:
 
-  1. Click the "Create Post" button on the sidebar.
-  2. Add an image and text, then click "Share".
+  1. Click on a user to visit their profile page.
+  2. Click the "Message" button and start chatting.
 
 - To manage your profile:
 
@@ -135,12 +121,14 @@ To use the threads clone, follow these steps:
 ## Features
 
 - **Authentication**: Secure login and session management using JSON Web Tokens (JWT). Includes login, logout, and sign up functionality.
-- **Content Management**:
-- **User Management**:
-- **Interaction Users**:
+- **Content Management**: Create and delete posts with image support using Cloudinary.
+- **User Management**: Manage user profiles, including updating information and account deactivation.
+- **Interaction with Others**: Follow other users, like and comment on posts, and view follower/following counts dynamically.
 - **Real-time Messaging**: Real-time communication using Socket.io, allowing users to send and receive messages instantly without page reloads.
 - **Online Users**: Display online users in real-time, providing visibility into who is currently active and available for chat.
 - **Infinite Scroll**: Seamless data loading with infinite scroll for better performance.
+- **Image Upload**: Upload images for posts, comments and messages using Cloudinary.
+- **Cors Origin**: Managing cross-origin requests with cors, enabling smooth frontend-backend communication.
 - **Database Integration**: MongoDB for flexible and scalable data storage.
 - **State Management**: Efficient state management using Zustand, which simplifies the handling of application state and improves performance.
 - **Server-side Rendering**: Improved performance and SEO with server-side rendering using Express.js.
@@ -148,8 +136,6 @@ To use the threads clone, follow these steps:
 - **Security**: Implemented security best practices, including password hashing, input validation, and secure authentication mechanisms.
 - **Responsive Design**: Optimized for both desktop and mobile devices.
 - **Real-time Updates**: Dynamic updates without page reloads.
-- **Image Upload**: Upload images for post, comments and messages using Cloudinary.
-- **Cors Origin**: Managing cross-origin requests with cors, enabling smooth frontend-backend communication.
 
 ## Technologies Used
 
@@ -168,7 +154,7 @@ To use the threads clone, follow these steps:
 ### Backend Dependencies
 
 - **bcrypt**: For hashing passwords and ensuring secure authentication.
-- **cloduinary**:
+- **cloduinary**: For uploading and managing images.
 - **cookie-parser**: Parse HTTP request cookies.
 - **cors**: Enable Cross-Origin Resource Sharing.
 - **dotenv**: Load environment variables from a .env file.
@@ -179,12 +165,18 @@ To use the threads clone, follow these steps:
 
 ### Frontend Dependencies
 
+- **@radix-ui**: For building pre-designed components.
+- **class-variance-authority**: Utility for managing class names.
+- **clsx**: Utility for constructing className strings conditionally.
+- **date-fns**: Modern JavaScript date utility library.
+- **lucide-react**: A collection of simple, beautiful, and consistent icons.
 - **react**: JavaScript library for building user interfaces.
 - **react-dom**: Entry point of the DOM-related rendering paths.
 - **react-icons**: Include popular icons in your React projects easily.
 - **react-router-dom**: DOM bindings for React Router.
 - **socket-io-client**: Client library for Socket.io.
 - **tailwind-merge**: A utility-first CSS framework for rapid UI development.
+- **tailwindcss-animate**: Tailwind CSS plugin for animations.
 - **zustand**: State management library.
 
 ## Contributing
