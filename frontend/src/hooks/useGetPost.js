@@ -12,7 +12,7 @@ const useGetPost = () => {
     const fetchPost = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch(`http://localhost:3000/api/post/${id}`, {
+        const response = await fetch(`/api/post/${id}`, {
           method: "GET",
           credentials: "include",
         });

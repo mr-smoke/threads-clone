@@ -7,7 +7,7 @@ const useLogout = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/user/logout", {
+      const response = await fetch("/api/user/logout", {
         method: "POST",
         credentials: "include",
       });

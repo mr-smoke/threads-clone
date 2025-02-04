@@ -13,13 +13,10 @@ const useGetConversations = () => {
 
     try {
       setIsLoading(true);
-      const response = await fetch(
-        `http://localhost:3000/api/chat?limit=14&offset=${offset}`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`/api/chat?limit=14&offset=${offset}`, {
+        method: "GET",
+        credentials: "include",
+      });
       const data = await response.json();
       if (data.length < 14) {
         setHasMore(false);

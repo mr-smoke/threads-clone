@@ -10,13 +10,10 @@ const useGetPersonalFeed = () => {
     const fetchFeed = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch(
-          "http://localhost:3000/api/post/personalFeed",
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
+        const response = await fetch("/api/post/personalFeed", {
+          method: "GET",
+          credentials: "include",
+        });
         const data = await response.json();
         setFeed(data);
       } catch (error) {

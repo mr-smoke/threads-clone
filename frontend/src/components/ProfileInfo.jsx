@@ -29,7 +29,7 @@ const ProfileInfo = () => {
   } = useFollowUser(profile);
 
   const copyLink = () => {
-    navigator.clipboard.writeText(`http://localhost:5173/${id}`);
+    navigator.clipboard.writeText(`${window.location.origin}/${id}`);
     toast({
       description: "Copied to clipboard",
       variant: "success",

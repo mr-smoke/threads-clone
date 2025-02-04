@@ -41,7 +41,7 @@ const PostActions = ({ post }) => {
   };
 
   const copyLink = () => {
-    navigator.clipboard.writeText(`http://localhost:5173/post/${post._id}`);
+    navigator.clipboard.writeText(`${window.location.origin}/post/${post._id}`);
     toast({
       description: "Copied to clipboard",
       variant: "success",

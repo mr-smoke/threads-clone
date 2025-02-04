@@ -27,16 +27,13 @@ const useFollowUser = (profile) => {
   const followUser = async (followId) => {
     try {
       setIsLoading(true);
-      const response = await fetch(
-        `http://localhost:3000/api/user/follow/${followId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`/api/user/follow/${followId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
       const data = await response.json();
 
       if (data.error) {

@@ -12,17 +12,14 @@ const useSendMessage = () => {
   const sendMessage = async (message) => {
     try {
       setIsLoading(true);
-      const response = await fetch(
-        `http://localhost:3000/api/chat/sendMessage/${id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(message),
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`/api/chat/sendMessage/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(message),
+        credentials: "include",
+      });
       const data = await response.json();
 
       if (data.error) {

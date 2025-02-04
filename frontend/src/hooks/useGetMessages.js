@@ -29,7 +29,7 @@ const useGetMessages = () => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `http://localhost:3000/api/chat/${id}?limit=10&offset=${offset}`,
+        `/api/chat/${id}?limit=10&offset=${offset}`,
         {
           method: "GET",
           credentials: "include",

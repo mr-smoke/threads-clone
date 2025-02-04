@@ -16,7 +16,7 @@ const useGetUserPosts = () => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `http://localhost:3000/api/post/user/${id}?limit=10&offset=${offset}`,
+        `/api/post/user/${id}?limit=10&offset=${offset}`,
         {
           method: "GET",
           credentials: "include",

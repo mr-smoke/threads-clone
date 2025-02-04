@@ -8,17 +8,14 @@ const useCreateComment = () => {
   const commentPost = async (comment, id) => {
     try {
       setIsLoading(true);
-      const response = await fetch(
-        `http://localhost:3000/api/post/comment/${id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(comment),
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`/api/post/comment/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(comment),
+        credentials: "include",
+      });
       const data = await response.json();
 
       if (data.error) {

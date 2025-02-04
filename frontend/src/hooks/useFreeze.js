@@ -10,7 +10,7 @@ const useFreeze = () => {
   const freeze = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("http://localhost:3000/api/user/freeze", {
+      const response = await fetch("/api/user/freeze", {
         method: "POST",
         credentials: "include",
       });

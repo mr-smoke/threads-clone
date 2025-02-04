@@ -9,13 +9,10 @@ const useGetProfile = (id) => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/api/user/profile/${id}`,
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
+        const response = await fetch(`/api/user/profile/${id}`, {
+          method: "GET",
+          credentials: "include",
+        });
         const data = await response.json();
         setProfile(data);
 

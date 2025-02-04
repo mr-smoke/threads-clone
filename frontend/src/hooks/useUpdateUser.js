@@ -10,17 +10,14 @@ const useUpdateUser = () => {
   const updateUser = async (formData, images) => {
     try {
       setIsLoading(true);
-      const response = await fetch(
-        `http://localhost:3000/api/user/update/${user._id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ ...formData, images }),
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`/api/user/update/${user._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...formData, images }),
+        credentials: "include",
+      });
       const data = await response.json();
 
       if (data.error) {

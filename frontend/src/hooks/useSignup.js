@@ -10,7 +10,7 @@ const useSignup = () => {
   const handleSignup = async (formData) => {
     try {
       setIsLoading(true);
-      const response = await fetch("http://localhost:3000/api/user/signup", {
+      const response = await fetch("/api/user/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
