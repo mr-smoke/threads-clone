@@ -13,7 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import Loading from "./Loading";
 import useFollowUser from "@/hooks/useFollowUser";
-import Button from "./button";
+import Button from "./Button";
 
 const ProfileInfo = () => {
   const { id } = useParams();

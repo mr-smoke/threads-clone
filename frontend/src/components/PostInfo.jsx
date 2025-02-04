@@ -11,7 +11,7 @@ import { FaEllipsisH, FaExclamationTriangle, FaTrash } from "react-icons/fa";
 import { useAuth } from "@/context/AuthContext";
 import useDeletePost from "@/hooks/useDeletePost";
 import useGetProfile from "@/hooks/useGetProfile";
-import Button from "./button";
+import Button from "./Button";
 import ProfileCard from "./ProfileCard";
 
 const PostInfo = ({ post }) => {

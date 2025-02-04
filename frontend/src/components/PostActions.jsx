@@ -14,7 +14,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
-import Button from "./button";
+import Button from "./Button";
 
 const PostActions = ({ post }) => {
   const { user } = useAuth();
