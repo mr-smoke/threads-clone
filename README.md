@@ -1,5 +1,7 @@
 # Threads Clone - Fullstack
 
+![Banner](https://i.ibb.co/jP0p6Wqg/banner.png)
+
 ## Table of Contents
 
 - [About The Project](#about-the-project)
@@ -15,6 +17,18 @@
 ## About The Project
 
 Threads Clone is a full-stack social media application inspired by Threads.net, built with React, Node.js, Express.js, MongoDB, Zustand, Socket.io, Tailwind CSS, Shadcn.ui, and Cloudinary. This project offers a seamless platform for users to share posts with images, comment or like on others' posts, follow other users, and engage in real-time messaging. It includes user authentication and authorization for secure access, and features profile management, allowing users to update their information or temporarily deactivate their accounts. It leverages the power of React for building a dynamic and responsive user interface, MongoDB for reliable and robust data storage, Express.js for handling server-side logic and API endpoints, Zustand for state management, Socket.io for real-time communication, Tailwind CSS for styling and responsive design, Shadcn.ui for pre-designed, customizable components and Cloudinary for uploading images.
+
+### Larger Devices
+
+- Click to play the gif.
+
+<a href="https://i.ibb.co/Gvt0y3y0/threads-clone.gif" target="_blank"><img src="https://i.ibb.co/PZ9NKzKN/threads-clone.gif" alt="blog-app" border="0" /></a>
+
+### Smaller Devices
+
+- Click to play the gif.
+
+<a href="https://i.ibb.co/HTt2ZqJh/mobile-threads-clone.gif" target="_blank"><img src="https://i.ibb.co/xq1sZ64F/mobile-threads-clone.gif" alt="blog-app" border="0" /></a>
 
 ### Key Use Cases:
 
@@ -65,6 +79,7 @@ To set up the project locally, follow these steps:
    CLOUDINARY_API_KEY= your_cloudinary_key
    CLOUDINARY_API_SECRET= your_cloudinary_secret
    PORT= 3000
+   NODE_ENV="development"
    ```
 
 5. Start the backend development server:
