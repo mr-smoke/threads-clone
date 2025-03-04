@@ -158,10 +158,10 @@ To use the threads clone, follow these steps:
 - [![Express][Express.js]][Express-url]
 - [![MongoDB][MongoDB]][Mongo-url]
 - [![Node][Node.js]][Node-url]
-- [![Socket][Socket.io]][Socket-url]
 - [![Zustand][Zustand]][Zustand-url]
-- [![Tailwind][Tailwind.css]][Tailwind-url]
+- [![Socket][Socket.io]][Socket-url]
 - [![Shadcn][Shadcn.ui]][Shadcn-url]
+- [![Tailwind][Tailwind.css]][Tailwind-url]
 - [![Cloudinary][Cloudinary]][Cloudinary-url]
 
 ## Dependencies
@@ -234,13 +234,13 @@ For questions or feedback, feel free to reach out:
 [Mongo-url]: https://www.mongodb.com
 [Node.js]: https://img.shields.io/badge/nodejs-20232A?style=for-the-badge&logo=nodedotjs&logoColor=61DAFB
 [Node-url]: https://nodejs.org/en
-[Socket.io]: https://img.shields.io/badge/Socket.io-20232A?style=for-the-badge&logo=Socket.io&logoColor=61DAFB
-[Socket-url]: https://socket.io
 [Zustand]: https://img.shields.io/badge/Zustand-000000?style=for-the-badge&logo=Zustand&logoColor=white
 [Zustand-url]: https://zustand-demo.pmnd.rs
-[Tailwind.css]: https://img.shields.io/badge/tailwindcss-20232A?style=for-the-badge&logo=tailwindcss&logoColor=61DAFB
-[Tailwind-url]: https://tailwindcss.com
+[Socket.io]: https://img.shields.io/badge/Socket.io-20232A?style=for-the-badge&logo=Socket.io&logoColor=61DAFB
+[Socket-url]: https://socket.io
 [Shadcn.ui]: https://img.shields.io/badge/shadcn/ui-000000?style=for-the-badge&logo=shadcn/ui&logoColor=white
 [Shadcn-url]: https://ui.shadcn.com
-[Cloudinary]: https://img.shields.io/badge/cloudinary-20232A?style=for-the-badge&logo=cloudinary&logoColor=61DAFB
+[Tailwind.css]: https://img.shields.io/badge/tailwindcss-20232A?style=for-the-badge&logo=tailwindcss&logoColor=61DAFB
+[Tailwind-url]: https://tailwindcss.com
+[Cloudinary]: https://img.shields.io/badge/cloudinary-000000?style=for-the-badge&logo=cloudinary&logoColor=white
 [Cloudinary-url]: https://cloudinary.com
